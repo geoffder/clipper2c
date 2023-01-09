@@ -35,3 +35,17 @@ typedef enum ClipperClipType {
 } ClipperClipType;
 
 typedef enum ClipperPathType { SUBJECT, CLIP } ClipperPathType;
+
+typedef enum ClipperJoinType {
+  SQUARE_JOIN,
+  ROUND_JOIN,
+  MITER_JOIN
+} ClipperJoinType;
+
+typedef enum ClipperEndType {
+  POLYGON_END,
+  JOINED_END,
+  BUTT_END,
+  SQUARE_END,
+  ROUND_END
+} ClipperEndType;
