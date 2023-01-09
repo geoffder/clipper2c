@@ -1,8 +1,8 @@
 #include "clipper2/clipper.core.h"
 #include <clipper2/clipper.h>
 
-#include <conv.h>
-#include <types.h>
+#include "conv.h"
+#include "types.h"
 using namespace Clipper2Lib;
 
 #ifdef __cplusplus
@@ -107,6 +107,100 @@ ClipperPathsD *clipper_pathsd_inflate(void *mem, ClipperPathsD *paths,
 
   auto p = InflatePaths(*from_c(paths), delta, from_c(jt), from_c(et),
                         miter_limit, precision);
+  return to_c(new (mem) PathsD(p));
+}
+
+ClipperPath64 *clipper_path64_translate(void *mem, ClipperPath64 *path,
+                                        int64_t dx, int64_t dy) {
+  auto p = TranslatePath(*from_c(path), dx, dy);
+  return to_c(new (mem) Path64(p));
+}
+
+ClipperPathD *clipper_pathd_translate(void *mem, ClipperPathD *path, double dx,
+                                      double dy) {
+  auto p = TranslatePath(*from_c(path), dx, dy);
+  return to_c(new (mem) PathD(p));
+}
+
+ClipperPaths64 *clipper_paths64_translate(void *mem, ClipperPaths64 *paths,
+                                          int64_t dx, int64_t dy) {
+  auto p = TranslatePaths(*from_c(paths), dx, dy);
+  return to_c(new (mem) Paths64(p));
+}
+
+ClipperPathsD *clipper_pathsd_translate(void *mem, ClipperPathsD *paths,
+                                        double dx, double dy) {
+  auto p = TranslatePaths(*from_c(paths), dx, dy);
+  return to_c(new (mem) PathsD(p));
+}
+
+ClipperRect64 *clipper_path64_bounds(void *mem, ClipperPath64 *path) {
+  auto r = Bounds(*from_c(path));
+  return to_c(new (mem) Rect64(r));
+}
+
+ClipperRectD *clipper_pathd_bounds(void *mem, ClipperPathD *path) {
+  auto r = Bounds(*from_c(path));
+  return to_c(new (mem) RectD(r));
+}
+
+ClipperRect64 *clipper_paths64_bounds(void *mem, ClipperPaths64 *paths) {
+  auto r = Bounds(*from_c(paths));
+  return to_c(new (mem) Rect64(r));
+}
+
+ClipperRectD *clipper_pathsd_bounds(void *mem, ClipperPathsD *paths) {
+  auto r = Bounds(*from_c(paths));
+  return to_c(new (mem) RectD(r));
+}
+
+ClipperPath64 *clipper_path64_rect_clip(void *mem, ClipperRect64 *rect,
+                                        ClipperPath64 *path) {
+  auto p = RectClip(*from_c(rect), *from_c(path));
+  return to_c(new (mem) Path64(p));
+}
+
+ClipperPathD *clipper_pathd_rect_clip(void *mem, ClipperRectD *rect,
+                                      ClipperPathD *path, int precision) {
+  auto p = RectClip(*from_c(rect), *from_c(path), precision);
+  return to_c(new (mem) PathD(p));
+}
+
+ClipperPaths64 *clipper_paths64_rect_clip(void *mem, ClipperRect64 *rect,
+                                          ClipperPaths64 *paths) {
+  auto p = RectClip(*from_c(rect), *from_c(paths));
+  return to_c(new (mem) Paths64(p));
+}
+
+ClipperPathsD *clipper_pathsd_rect_clip(void *mem, ClipperRectD *rect,
+                                        ClipperPathsD *paths, int precision) {
+  auto p = RectClip(*from_c(rect), *from_c(paths), precision);
+  return to_c(new (mem) PathsD(p));
+}
+
+ClipperPaths64 *clipper_paths64_rect_clip_line(void *mem, ClipperRect64 *rect,
+                                               ClipperPath64 *path) {
+  auto p = RectClipLines(*from_c(rect), *from_c(path));
+  return to_c(new (mem) Paths64(p));
+}
+
+ClipperPathsD *clipper_pathsd_rect_clip_line(void *mem, ClipperRectD *rect,
+                                             ClipperPathD *path,
+                                             int precision) {
+  auto p = RectClipLines(*from_c(rect), *from_c(path), precision);
+  return to_c(new (mem) PathsD(p));
+}
+
+ClipperPaths64 *clipper_paths64_rect_clip_lines(void *mem, ClipperRect64 *rect,
+                                                ClipperPaths64 *paths) {
+  auto p = RectClipLines(*from_c(rect), *from_c(paths));
+  return to_c(new (mem) Paths64(p));
+}
+
+ClipperPathsD *clipper_pathsd_rect_clip_lines(void *mem, ClipperRectD *rect,
+                                              ClipperPathsD *paths,
+                                              int precision) {
+  auto p = RectClipLines(*from_c(rect), *from_c(paths), precision);
   return to_c(new (mem) PathsD(p));
 }
 

@@ -8,6 +8,8 @@ typedef struct ClipperPath64 ClipperPath64;
 typedef struct ClipperPathD ClipperPathD;
 typedef struct ClipperPaths64 ClipperPaths64;
 typedef struct ClipperPathsD ClipperPathsD;
+typedef struct ClipperRect64 ClipperRect64;
+typedef struct ClipperRectD ClipperRectD;
 
 typedef struct ClipperPointD {
   double x;
@@ -18,6 +20,20 @@ typedef struct ClipperPoint64 {
   int64_t x;
   int64_t y;
 } ClipperPoint64;
+
+struct ClipperRect64 {
+  int64_t left;
+  int64_t top;
+  int64_t right;
+  int64_t bottom;
+};
+
+struct ClipperRectD {
+  double left;
+  double top;
+  double right;
+  double bottom;
+};
 
 typedef enum ClipperFillRule {
   EVEN_ODD,

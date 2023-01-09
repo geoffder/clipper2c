@@ -1,6 +1,18 @@
+#include "conv.h"
 #include "clipper2/clipper.core.h"
-#include <conv.h>
-#include <types.h>
+#include "types.h"
+
+ClipperPoint64 to_c(Clipper2Lib::Point64 p) { return {p.x, p.y}; }
+
+ClipperPointD to_c(Clipper2Lib::PointD p) { return {p.x, p.y}; }
+
+ClipperPath64 *to_c(Clipper2Lib::Path64 *p) {
+  return reinterpret_cast<ClipperPath64 *>(p);
+}
+
+ClipperPathD *to_c(Clipper2Lib::PathD *p) {
+  return reinterpret_cast<ClipperPathD *>(p);
+}
 
 ClipperPaths64 *to_c(Clipper2Lib::Paths64 *p) {
   return reinterpret_cast<ClipperPaths64 *>(p);
@@ -8,6 +20,14 @@ ClipperPaths64 *to_c(Clipper2Lib::Paths64 *p) {
 
 ClipperPathsD *to_c(Clipper2Lib::PathsD *p) {
   return reinterpret_cast<ClipperPathsD *>(p);
+}
+
+ClipperRect64 *to_c(Clipper2Lib::Rect64 *p) {
+  return reinterpret_cast<ClipperRect64 *>(p);
+}
+
+ClipperRectD *to_c(Clipper2Lib::RectD *p) {
+  return reinterpret_cast<ClipperRectD *>(p);
 }
 
 ClipperClipType to_c(Clipper2Lib::ClipType cliptype) {
@@ -85,12 +105,36 @@ ClipperEndType to_c(Clipper2Lib::EndType endtype) {
   return et;
 }
 
+Clipper2Lib::Point64 from_c(ClipperPoint64 p) {
+  return Clipper2Lib::Point64(p.x, p.y);
+}
+
+Clipper2Lib::PointD from_c(ClipperPointD p) {
+  return Clipper2Lib::PointD(p.x, p.y);
+}
+
+Clipper2Lib::Path64 *from_c(ClipperPath64 *p) {
+  return reinterpret_cast<Clipper2Lib::Path64 *>(p);
+}
+
+Clipper2Lib::PathD *from_c(ClipperPathD *p) {
+  return reinterpret_cast<Clipper2Lib::PathD *>(p);
+}
+
 Clipper2Lib::Paths64 *from_c(ClipperPaths64 *p) {
   return reinterpret_cast<Clipper2Lib::Paths64 *>(p);
 }
 
 Clipper2Lib::PathsD *from_c(ClipperPathsD *p) {
   return reinterpret_cast<Clipper2Lib::PathsD *>(p);
+}
+
+Clipper2Lib::Rect64 *from_c(ClipperRect64 *p) {
+  return reinterpret_cast<Clipper2Lib::Rect64 *>(p);
+}
+
+Clipper2Lib::RectD *from_c(ClipperRectD *p) {
+  return reinterpret_cast<Clipper2Lib::RectD *>(p);
 }
 
 Clipper2Lib::ClipType from_c(ClipperClipType fr) {
@@ -166,4 +210,14 @@ Clipper2Lib::EndType from_c(ClipperEndType et) {
     break;
   };
   return endtype;
+}
+
+struct ClipperRect64 to_struct(Clipper2Lib::Rect64 rect) {
+  struct ClipperRect64 r = {rect.left, rect.top, rect.right, rect.bottom};
+  return r;
+}
+
+struct ClipperRectD to_struct(Clipper2Lib::RectD rect) {
+  struct ClipperRectD r = {rect.left, rect.top, rect.right, rect.bottom};
+  return r;
 }
