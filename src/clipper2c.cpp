@@ -256,6 +256,13 @@ ClipperPath64 *clipper_path64_ellipse(void *mem, ClipperPoint64 center,
   return to_c(new (mem) Path64(p));
 }
 
+ClipperPathD *clipper_pathd_ellipse(void *mem, ClipperPointD center,
+                                    double radius_x, double radius_y,
+                                    int steps) {
+  auto p = Ellipse(PointD(center.x, center.y), radius_x, radius_y, steps);
+  return to_c(new (mem) PathD(p));
+}
+
 ClipperPaths64 *clipper_paths64(void *mem) { return to_c(new (mem) Paths64()); }
 ClipperPathsD *clipper_pathsd(void *mem) { return to_c(new (mem) PathsD()); }
 

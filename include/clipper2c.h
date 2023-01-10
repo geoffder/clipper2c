@@ -92,6 +92,9 @@ void clipper_pathd_add_point(ClipperPathD *path, ClipperPointD pt);
 ClipperPath64 *clipper_path64_ellipse(void *mem, ClipperPoint64 center,
                                       double radius_x, double radius_y,
                                       int steps);
+ClipperPathD *clipper_pathd_ellipse(void *mem, ClipperPointD center,
+                                    double radius_x, double radius_y,
+                                    int steps);
 
 ClipperPaths64 *clipper_paths64(void *mem);
 ClipperPathsD *clipper_pathsd(void *mem);
