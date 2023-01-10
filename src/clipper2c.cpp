@@ -1,8 +1,15 @@
 #include "clipper2/clipper.core.h"
 #include <clipper2/clipper.h>
+#include <cmath>
+#include <cstdint>
 
 #include "conv.h"
 #include "types.h"
+#include <clipper2c.h>
+
+#include "polytree.cpp"
+#include "rect.cpp"
+
 using namespace Clipper2Lib;
 
 #ifdef __cplusplus
@@ -91,6 +98,8 @@ ClipperPathsD *clipper_pathsd_xor(void *mem, ClipperPathsD *subjects,
   return to_c(new (mem) PathsD(p));
 }
 
+// Path Offsetting
+
 ClipperPaths64 *clipper_paths64_inflate(void *mem, ClipperPaths64 *paths,
                                         double delta, ClipperJoinType jt,
                                         ClipperEndType et, double miter_limit) {
@@ -110,29 +119,7 @@ ClipperPathsD *clipper_pathsd_inflate(void *mem, ClipperPathsD *paths,
   return to_c(new (mem) PathsD(p));
 }
 
-ClipperPath64 *clipper_path64_translate(void *mem, ClipperPath64 *path,
-                                        int64_t dx, int64_t dy) {
-  auto p = TranslatePath(*from_c(path), dx, dy);
-  return to_c(new (mem) Path64(p));
-}
-
-ClipperPathD *clipper_pathd_translate(void *mem, ClipperPathD *path, double dx,
-                                      double dy) {
-  auto p = TranslatePath(*from_c(path), dx, dy);
-  return to_c(new (mem) PathD(p));
-}
-
-ClipperPaths64 *clipper_paths64_translate(void *mem, ClipperPaths64 *paths,
-                                          int64_t dx, int64_t dy) {
-  auto p = TranslatePaths(*from_c(paths), dx, dy);
-  return to_c(new (mem) Paths64(p));
-}
-
-ClipperPathsD *clipper_pathsd_translate(void *mem, ClipperPathsD *paths,
-                                        double dx, double dy) {
-  auto p = TranslatePaths(*from_c(paths), dx, dy);
-  return to_c(new (mem) PathsD(p));
-}
+// Rect Clipping
 
 ClipperRect64 *clipper_path64_bounds(void *mem, ClipperPath64 *path) {
   auto r = Bounds(*from_c(path));
@@ -204,9 +191,203 @@ ClipperPathsD *clipper_pathsd_rect_clip_lines(void *mem, ClipperRectD *rect,
   return to_c(new (mem) PathsD(p));
 }
 
+// Path Constructors
+
+ClipperPath64 *clipper_path64_of_string(void *mem, char *str) {
+  auto p = MakePath(str);
+  return to_c(new (mem) Path64(p));
+}
+
+ClipperPathD *clipper_pathd_of_string(void *mem, char *str) {
+  auto p = MakePathD(str);
+  return to_c(new (mem) PathD(p));
+}
+
+ClipperPath64 *clipper_path64_ellipse(void *mem, ClipperPoint64 center,
+                                      double radius_x, double radius_y,
+                                      int steps) {
+  auto p = Ellipse(Point64(center.x, center.y), radius_x, radius_y, steps);
+  return to_c(new (mem) Path64(p));
+}
+
+// Path Transforms
+
+ClipperPath64 *clipper_path64_translate(void *mem, ClipperPath64 *path,
+                                        int64_t dx, int64_t dy) {
+  auto p = TranslatePath(*from_c(path), dx, dy);
+  return to_c(new (mem) Path64(p));
+}
+
+ClipperPathD *clipper_pathd_translate(void *mem, ClipperPathD *path, double dx,
+                                      double dy) {
+  auto p = TranslatePath(*from_c(path), dx, dy);
+  return to_c(new (mem) PathD(p));
+}
+
+ClipperPaths64 *clipper_paths64_translate(void *mem, ClipperPaths64 *paths,
+                                          int64_t dx, int64_t dy) {
+  auto p = TranslatePaths(*from_c(paths), dx, dy);
+  return to_c(new (mem) Paths64(p));
+}
+
+ClipperPathsD *clipper_pathsd_translate(void *mem, ClipperPathsD *paths,
+                                        double dx, double dy) {
+  auto p = TranslatePaths(*from_c(paths), dx, dy);
+  return to_c(new (mem) PathsD(p));
+}
+
+ClipperPath64 *clipper_path64_trim_collinear(void *mem, ClipperPath64 *path,
+                                             int is_open_path) {
+  auto p = TrimCollinear(*from_c(path), is_open_path);
+  return to_c(new (mem) Path64(p));
+}
+
+ClipperPathD *clipper_pathd_trim_collinear(void *mem, ClipperPathD *path,
+                                           int precision, int is_open_path) {
+  auto p = TrimCollinear(*from_c(path), precision, is_open_path);
+  return to_c(new (mem) PathD(p));
+}
+
+ClipperPath64 *clipper_path64_ramer_douglas_peucker(void *mem,
+                                                    ClipperPath64 *path,
+                                                    double epsilon) {
+  auto p = RamerDouglasPeucker(*from_c(path), epsilon);
+  return to_c(new (mem) Path64(p));
+}
+
+ClipperPathD *clipper_pathd_ramer_douglas_peucker(void *mem, ClipperPathD *path,
+                                                  double epsilon) {
+  auto p = RamerDouglasPeucker(*from_c(path), epsilon);
+  return to_c(new (mem) PathD(p));
+}
+
+ClipperPaths64 *clipper_paths64_ramer_douglas_peucker(void *mem,
+                                                      ClipperPaths64 *paths,
+                                                      double epsilon) {
+  auto p = RamerDouglasPeucker(*from_c(paths), epsilon);
+  return to_c(new (mem) Paths64(p));
+}
+
+ClipperPathsD *clipper_pathsd_ramer_douglas_peucker(void *mem,
+                                                    ClipperPathsD *paths,
+                                                    double epsilon) {
+  auto p = RamerDouglasPeucker(*from_c(paths), epsilon);
+  return to_c(new (mem) PathsD(p));
+}
+
+// Minkowski
+
+ClipperPaths64 *clipper_path64_minkowski_sum(void *mem, ClipperPath64 *pattern,
+                                             ClipperPath64 *path,
+                                             int is_closed) {
+  auto ps = MinkowskiSum(*from_c(pattern), *from_c(path), is_closed);
+  return to_c(new (mem) Paths64(ps));
+}
+
+ClipperPathsD *clipper_pathd_minkowski_sum(void *mem, ClipperPathD *pattern,
+                                           ClipperPathD *path, int is_closed,
+                                           int precision) {
+  auto ps = MinkowskiSum(*from_c(pattern), *from_c(path), is_closed, precision);
+  return to_c(new (mem) PathsD(ps));
+}
+
+ClipperPaths64 *clipper_path64_minkowski_diff(void *mem, ClipperPath64 *pattern,
+                                              ClipperPath64 *path,
+                                              int is_closed) {
+  auto ps = MinkowskiDiff(*from_c(pattern), *from_c(path), is_closed);
+  return to_c(new (mem) Paths64(ps));
+}
+
+ClipperPathsD *clipper_pathd_minkowski_diff(void *mem, ClipperPathD *pattern,
+                                            ClipperPathD *path, int is_closed,
+                                            int precision) {
+  auto ps =
+      MinkowskiDiff(*from_c(pattern), *from_c(path), is_closed, precision);
+  return to_c(new (mem) PathsD(ps));
+}
+
+// Geometry
+
+double _point64_distance_sqr(ClipperPoint64 a, ClipperPoint64 b) {
+  return Sqr(a.x - b.x) + Sqr(a.y - b.y);
+}
+
+double _pointd_distance_sqr(ClipperPointD a, ClipperPointD b) {
+  return Sqr(a.x - b.x) + Sqr(a.y - b.y);
+}
+
+double _point64_cross_product(ClipperPoint64 a, ClipperPoint64 b,
+                              ClipperPoint64 c) {
+  return (static_cast<double>(b.x - a.x) * static_cast<double>(c.y - b.y) -
+          static_cast<double>(b.y - a.y) * static_cast<double>(c.x - b.x));
+}
+
+double _pointd_cross_product(ClipperPointD a, ClipperPointD b,
+                             ClipperPointD c) {
+  return ((b.x - a.x) * (c.y - b.y) - (b.y - a.y) * (c.x - b.x));
+}
+
+double clipper_point64_distance(ClipperPoint64 a, ClipperPoint64 b) {
+  return std::sqrt(_point64_distance_sqr(a, b));
+}
+
+double clipper_pointd_distance(ClipperPointD a, ClipperPointD b) {
+  return std::sqrt(_pointd_distance_sqr(a, b));
+}
+
+int clipper_point64_near_collinear(ClipperPoint64 a, ClipperPoint64 b,
+                                   ClipperPoint64 c,
+                                   double sin_sqrd_min_angle_rads) {
+  double cp = std::abs(_point64_cross_product(a, b, c));
+  return (cp * cp) /
+             (_point64_distance_sqr(a, b) * _point64_distance_sqr(b, c)) <
+         sin_sqrd_min_angle_rads;
+}
+
+int clipper_pointd_near_collinear(ClipperPointD a, ClipperPointD b,
+                                  ClipperPointD c,
+                                  double sin_sqrd_min_angle_rads) {
+  double cp = std::abs(_pointd_cross_product(a, b, c));
+  return (cp * cp) / (_pointd_distance_sqr(a, b) * _pointd_distance_sqr(b, c)) <
+         sin_sqrd_min_angle_rads;
+}
+
 // memory size
+
+size_t clipper_path64_size() { return sizeof(Path64); }
+size_t clipper_pathd_size() { return sizeof(PathD); }
 size_t clipper_paths64_size() { return sizeof(Paths64); }
-size_t clipper_pathsD_size() { return sizeof(PathsD); }
+size_t clipper_pathsd_size() { return sizeof(PathsD); }
+size_t clipper_rect64_size() { return sizeof(Rect64); }
+size_t clipper_rectd_size() { return sizeof(RectD); }
+size_t clipper_polytree64_size() { return sizeof(PolyTree64); }
+size_t clipper_polytreed_size() { return sizeof(PolyTreeD); }
+
+// destruction
+
+void clipper_destruct_path64(ClipperPath64 *p) { from_c(p)->~Path64(); }
+void clipper_destruct_pathd(ClipperPathD *p) { from_c(p)->~PathD(); }
+void clipper_destruct_paths64(ClipperPaths64 *p) { from_c(p)->~Paths64(); }
+void clipper_destruct_pathsd(ClipperPathsD *p) { from_c(p)->~PathsD(); }
+void clipper_destruct_rect64(ClipperRect64 *p) { from_c(p)->~Rect64(); }
+void clipper_destruct_rectd(ClipperRectD *p) { from_c(p)->~RectD(); }
+void clipper_destruct_polytree64(ClipperPolyTree64 *p) {
+  from_c(p)->~PolyTree64();
+}
+void clipper_destruct_polytreed(ClipperPolyTreeD *p) {
+  from_c(p)->~PolyTreeD();
+}
+
+// pointer free + destruction
+
+void clipper_delete_path64(ClipperPath64 *p) { delete from_c(p); }
+void clipper_delete_pathd(ClipperPathD *p) { delete from_c(p); }
+void clipper_delete_paths64(ClipperPaths64 *p) { delete from_c(p); }
+void clipper_delete_pathsd(ClipperPathsD *p) { delete from_c(p); }
+void clipper_delete_rect64(ClipperRect64 *p) { delete from_c(p); }
+void clipper_delete_rectd(ClipperRectD *p) { delete from_c(p); }
+void clipper_delete_polytree64(ClipperPolyTree64 *p) { delete from_c(p); }
+void clipper_delete_polytreed(ClipperPolyTreeD *p) { delete from_c(p); }
 
 #ifdef __cplusplus
 }

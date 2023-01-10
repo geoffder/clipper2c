@@ -30,6 +30,14 @@ ClipperRectD *to_c(Clipper2Lib::RectD *p) {
   return reinterpret_cast<ClipperRectD *>(p);
 }
 
+ClipperPolyTree64 *to_c(Clipper2Lib::PolyTree64 *p) {
+  return reinterpret_cast<ClipperPolyTree64 *>(p);
+}
+
+ClipperPolyTreeD *to_c(Clipper2Lib::PolyTreeD *p) {
+  return reinterpret_cast<ClipperPolyTreeD *>(p);
+}
+
 ClipperClipType to_c(Clipper2Lib::ClipType cliptype) {
   ClipperClipType ct = NONE;
   switch (cliptype) {
@@ -135,6 +143,14 @@ Clipper2Lib::Rect64 *from_c(ClipperRect64 *p) {
 
 Clipper2Lib::RectD *from_c(ClipperRectD *p) {
   return reinterpret_cast<Clipper2Lib::RectD *>(p);
+}
+
+Clipper2Lib::PolyTree64 *from_c(ClipperPolyTree64 *p) {
+  return reinterpret_cast<Clipper2Lib::PolyTree64 *>(p);
+}
+
+Clipper2Lib::PolyTreeD *from_c(ClipperPolyTreeD *p) {
+  return reinterpret_cast<Clipper2Lib::PolyTreeD *>(p);
 }
 
 Clipper2Lib::ClipType from_c(ClipperClipType fr) {

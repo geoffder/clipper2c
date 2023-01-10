@@ -2,6 +2,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct ClipperClipper64 ClipperClipper64;
 typedef struct ClipperClipperD ClipperClipperD;
 typedef struct ClipperPath64 ClipperPath64;
@@ -10,6 +14,8 @@ typedef struct ClipperPaths64 ClipperPaths64;
 typedef struct ClipperPathsD ClipperPathsD;
 typedef struct ClipperRect64 ClipperRect64;
 typedef struct ClipperRectD ClipperRectD;
+typedef struct ClipperPolyTree64 ClipperPolyTree64;
+typedef struct ClipperPolyTreeD ClipperPolyTreeD;
 
 typedef struct ClipperPointD {
   double x;
@@ -65,3 +71,7 @@ typedef enum ClipperEndType {
   SQUARE_END,
   ROUND_END
 } ClipperEndType;
+
+#ifdef __cplusplus
+}
+#endif

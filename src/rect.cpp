@@ -6,6 +6,10 @@
 
 using namespace Clipper2Lib;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Constructors
 
 ClipperRect64 *clipper_rect64(void *mem, int64_t left, int64_t top,
@@ -63,25 +67,29 @@ ClipperPointD clipper_rectd_midpoint(ClipperRectD *r) {
   return to_c(PointD(p));
 }
 
-ClipperPathD *clipper_rectD_as_path(void *mem, ClipperRectD *r) {
+ClipperPathD *clipper_rectd_as_path(void *mem, ClipperRectD *r) {
   auto p = from_c(r)->AsPath();
   return to_c(new (mem) PathD(p));
 }
 
-int clipper_rectD_contains_pt(ClipperRectD *r, ClipperPointD pt) {
+int clipper_rectd_contains_pt(ClipperRectD *r, ClipperPointD pt) {
   return from_c(r)->Contains(from_c(pt));
 }
 
-int clipper_rectD_contains_rect(ClipperRectD *a, ClipperRectD *b) {
+int clipper_rectd_contains_rect(ClipperRectD *a, ClipperRectD *b) {
   return from_c(a)->Contains(*from_c(b));
 }
 
-void clipper_rectD_scale(ClipperRectD *r, double scale) {
+void clipper_rectd_scale(ClipperRectD *r, double scale) {
   from_c(r)->Scale(scale);
 }
 
-int clipper_rectD_is_empty(ClipperRectD *r) { return from_c(r)->IsEmpty(); }
+int clipper_rectd_is_empty(ClipperRectD *r) { return from_c(r)->IsEmpty(); }
 
-int clipper_rectD_intersects(ClipperRectD *a, ClipperRectD *b) {
+int clipper_rectd_intersects(ClipperRectD *a, ClipperRectD *b) {
   return from_c(a)->Intersects(*from_c(b));
 }
+
+#ifdef __cplusplus
+}
+#endif
