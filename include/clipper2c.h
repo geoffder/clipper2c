@@ -80,12 +80,29 @@ ClipperPathsD *clipper_pathsd_rect_clip_lines(void *mem, ClipperRectD *rect,
                                               ClipperPathsD *paths,
                                               int precision);
 // Path Constructors
-//
+
+ClipperPath64 *clipper_path64(void *mem);
+ClipperPathD *clipper_pathd(void *mem);
 ClipperPath64 *clipper_path64_of_string(void *mem, char *str);
 ClipperPathD *clipper_pathd_of_string(void *mem, char *str);
+ClipperPath64 *clipper_path64_of_points(void *mem, ClipperPoint64 *pts,
+                                        size_t len_pts);
+ClipperPathD *clipper_pathd_of_points(void *mem, ClipperPointD *pts,
+                                      size_t len_pts);
+void clipper_path64_add_point(ClipperPath64 *path, ClipperPoint64 pt);
+void clipper_pathd_add_point(ClipperPathD *path, ClipperPointD pt);
 ClipperPath64 *clipper_path64_ellipse(void *mem, ClipperPoint64 center,
                                       double radius_x, double radius_y,
                                       int steps);
+
+ClipperPaths64 *clipper_paths64(void *mem);
+ClipperPathsD *clipper_pathsd(void *mem);
+ClipperPaths64 *clipper_paths64_of_paths(void *mem, ClipperPath64 **paths,
+                                         size_t len_paths);
+ClipperPathsD *clipper_pathsd_of_paths(void *mem, ClipperPathD **paths,
+                                       size_t len_paths);
+void clipper_paths64_add_path(ClipperPaths64 *paths, ClipperPath64 *p);
+void clipper_pathsd_add_path(ClipperPathsD *paths, ClipperPathD *p);
 
 // Path Transformations
 

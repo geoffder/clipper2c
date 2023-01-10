@@ -12,6 +12,26 @@
 
 using namespace Clipper2Lib;
 
+namespace {
+double point64_distance_sqr(ClipperPoint64 a, ClipperPoint64 b) {
+  return Sqr(a.x - b.x) + Sqr(a.y - b.y);
+}
+
+double pointd_distance_sqr(ClipperPointD a, ClipperPointD b) {
+  return Sqr(a.x - b.x) + Sqr(a.y - b.y);
+}
+
+double point64_cross_product(ClipperPoint64 a, ClipperPoint64 b,
+                             ClipperPoint64 c) {
+  return (static_cast<double>(b.x - a.x) * static_cast<double>(c.y - b.y) -
+          static_cast<double>(b.y - a.y) * static_cast<double>(c.x - b.x));
+}
+
+double pointd_cross_product(ClipperPointD a, ClipperPointD b, ClipperPointD c) {
+  return ((b.x - a.x) * (c.y - b.y) - (b.y - a.y) * (c.x - b.x));
+}
+} // namespace
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -193,6 +213,9 @@ ClipperPathsD *clipper_pathsd_rect_clip_lines(void *mem, ClipperRectD *rect,
 
 // Path Constructors
 
+ClipperPath64 *clipper_path64(void *mem) { return to_c(new (mem) Path64()); }
+ClipperPathD *clipper_pathd(void *mem) { return to_c(new (mem) PathD()); }
+
 ClipperPath64 *clipper_path64_of_string(void *mem, char *str) {
   auto p = MakePath(str);
   return to_c(new (mem) Path64(p));
@@ -203,11 +226,66 @@ ClipperPathD *clipper_pathd_of_string(void *mem, char *str) {
   return to_c(new (mem) PathD(p));
 }
 
+ClipperPath64 *clipper_path64_of_points(void *mem, ClipperPoint64 *pts,
+                                        size_t len_pts) {
+  auto path = new (mem) Path64();
+  for (int i = 0; i < len_pts; ++i) {
+    path->push_back(Point64(pts[i].x, pts[i].y));
+  }
+  return to_c(path);
+}
+
+ClipperPathD *clipper_pathd_of_points(void *mem, ClipperPointD *pts,
+                                      size_t len_pts) {
+  auto path = new (mem) PathD();
+  for (int i = 0; i < len_pts; ++i) {
+    path->push_back(PointD(pts[i].x, pts[i].y));
+  }
+  return to_c(path);
+}
+
+void clipper_path64_add_point(ClipperPath64 *path, ClipperPoint64 pt) {
+  from_c(path)->push_back(from_c(pt));
+}
+
+void clipper_pathd_add_point(ClipperPathD *path, ClipperPointD pt) {
+  from_c(path)->push_back(from_c(pt));
+}
+
 ClipperPath64 *clipper_path64_ellipse(void *mem, ClipperPoint64 center,
                                       double radius_x, double radius_y,
                                       int steps) {
   auto p = Ellipse(Point64(center.x, center.y), radius_x, radius_y, steps);
   return to_c(new (mem) Path64(p));
+}
+
+ClipperPaths64 *clipper_paths64(void *mem) { return to_c(new (mem) Paths64()); }
+ClipperPathsD *clipper_pathsd(void *mem) { return to_c(new (mem) PathsD()); }
+
+ClipperPaths64 *clipper_paths64_of_paths(void *mem, ClipperPath64 **paths,
+                                         size_t len_paths) {
+  auto ps = new (mem) Paths64();
+  for (int i = 0; i < len_paths; ++i) {
+    ps->push_back(*from_c(paths[i]));
+  }
+  return to_c(ps);
+}
+
+ClipperPathsD *clipper_pathsd_of_paths(void *mem, ClipperPathD **paths,
+                                       size_t len_paths) {
+  auto ps = new (mem) PathsD();
+  for (int i = 0; i < len_paths; ++i) {
+    ps->push_back(*from_c(paths[i]));
+  }
+  return to_c(ps);
+}
+
+void clipper_paths64_add_path(ClipperPaths64 *paths, ClipperPath64 *p) {
+  from_c(paths)->push_back(*from_c(p));
+}
+
+void clipper_pathsd_add_path(ClipperPathsD *paths, ClipperPathD *p) {
+  from_c(paths)->push_back(*from_c(p));
 }
 
 // Path Transforms
@@ -308,47 +386,27 @@ ClipperPathsD *clipper_pathd_minkowski_diff(void *mem, ClipperPathD *pattern,
 
 // Geometry
 
-double _point64_distance_sqr(ClipperPoint64 a, ClipperPoint64 b) {
-  return Sqr(a.x - b.x) + Sqr(a.y - b.y);
-}
-
-double _pointd_distance_sqr(ClipperPointD a, ClipperPointD b) {
-  return Sqr(a.x - b.x) + Sqr(a.y - b.y);
-}
-
-double _point64_cross_product(ClipperPoint64 a, ClipperPoint64 b,
-                              ClipperPoint64 c) {
-  return (static_cast<double>(b.x - a.x) * static_cast<double>(c.y - b.y) -
-          static_cast<double>(b.y - a.y) * static_cast<double>(c.x - b.x));
-}
-
-double _pointd_cross_product(ClipperPointD a, ClipperPointD b,
-                             ClipperPointD c) {
-  return ((b.x - a.x) * (c.y - b.y) - (b.y - a.y) * (c.x - b.x));
-}
-
 double clipper_point64_distance(ClipperPoint64 a, ClipperPoint64 b) {
-  return std::sqrt(_point64_distance_sqr(a, b));
+  return std::sqrt(point64_distance_sqr(a, b));
 }
 
 double clipper_pointd_distance(ClipperPointD a, ClipperPointD b) {
-  return std::sqrt(_pointd_distance_sqr(a, b));
+  return std::sqrt(pointd_distance_sqr(a, b));
 }
 
 int clipper_point64_near_collinear(ClipperPoint64 a, ClipperPoint64 b,
                                    ClipperPoint64 c,
                                    double sin_sqrd_min_angle_rads) {
-  double cp = std::abs(_point64_cross_product(a, b, c));
-  return (cp * cp) /
-             (_point64_distance_sqr(a, b) * _point64_distance_sqr(b, c)) <
+  double cp = std::abs(point64_cross_product(a, b, c));
+  return (cp * cp) / (point64_distance_sqr(a, b) * point64_distance_sqr(b, c)) <
          sin_sqrd_min_angle_rads;
 }
 
 int clipper_pointd_near_collinear(ClipperPointD a, ClipperPointD b,
                                   ClipperPointD c,
                                   double sin_sqrd_min_angle_rads) {
-  double cp = std::abs(_pointd_cross_product(a, b, c));
-  return (cp * cp) / (_pointd_distance_sqr(a, b) * _pointd_distance_sqr(b, c)) <
+  double cp = std::abs(pointd_cross_product(a, b, c));
+  return (cp * cp) / (pointd_distance_sqr(a, b) * pointd_distance_sqr(b, c)) <
          sin_sqrd_min_angle_rads;
 }
 
