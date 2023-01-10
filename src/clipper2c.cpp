@@ -7,11 +7,6 @@
 #include "types.h"
 #include <clipper2c.h>
 
-#include "clipper64.cpp"
-#include "clipperd.cpp"
-#include "polytree.cpp"
-#include "rect.cpp"
-
 using namespace Clipper2Lib;
 
 namespace {

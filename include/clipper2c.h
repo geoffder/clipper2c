@@ -1,11 +1,6 @@
-#include "polytree.h"
-#include "rect.h"
-#include "types.h"
 #include <stddef.h>
 #include <stdint.h>
-
-#include "clipper64.h"
-#include "clipperd.h"
+#include <types.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -173,6 +168,127 @@ int clipper_point64_near_collinear(ClipperPoint64 a, ClipperPoint64 b,
 int clipper_pointd_near_collinear(ClipperPointD a, ClipperPointD b,
                                   ClipperPointD c,
                                   double sin_sqrd_min_angle_rads);
+
+// Class Interfaces
+
+// PolyTree Constructors
+
+ClipperPolyTree64 *clipper_polytree64(void *mem, ClipperPolyTree64 *parent);
+ClipperPolyTreeD *clipper_polytreed(void *mem, ClipperPolyTreeD *parent);
+
+// PolyTree64 Methods
+
+ClipperPolyTree64 *clipper_polytree64_get(ClipperPolyTree64 *pt, size_t idx);
+ClipperPolyTree64 *clipper_polytree64_add_child(void *mem,
+                                                ClipperPolyTree64 *pt,
+                                                ClipperPath64 *path);
+
+void clipper_polytree64_clear(ClipperPolyTree64 *pt);
+size_t clipper_polytree64_count(ClipperPolyTree64 *pt);
+ClipperPath64 *clipper_polytree64_polygon(void *mem, ClipperPolyTree64 *pt);
+double clipper_polytree64_area(ClipperPolyTree64 *pt);
+ClipperPaths64 *clipper_polytree64_to_paths(void *mem, ClipperPolyTree64 *pt);
+int clipper_polytree64_fully_contains_children(ClipperPolyTree64 *pt);
+
+// PolyTreeD Methods
+
+ClipperPolyTreeD *clipper_polytreed_get(ClipperPolyTreeD *pt, size_t idx);
+void clipper_polytreed_set_inv_scale(ClipperPolyTreeD *pt, double value);
+double clipper_polytreed_inv_scale(ClipperPolyTreeD *pt);
+ClipperPolyTreeD *clipper_polytreed_add_child(void *mem, ClipperPolyTreeD *pt,
+                                              ClipperPath64 *path);
+void clipper_polytreed_clear(ClipperPolyTreeD *pt);
+size_t clipper_polytreed_count(ClipperPolyTreeD *pt);
+ClipperPathD *clipper_polytreed_polygon(void *mem, ClipperPolyTreeD *pt);
+double clipper_polytreed_area(ClipperPolyTreeD *pt);
+ClipperPathsD *clipper_polytreed_to_paths(void *mem, ClipperPolyTreeD *pt);
+
+// Rect Constructors
+
+ClipperRect64 *clipper_rect64(void *mem, int64_t left, int64_t top,
+                              int64_t right, int64_t bottom);
+ClipperRectD *clipper_rectd(void *mem, double left, double top, double right,
+                            double bottom);
+
+// Rect64 Methods
+
+int64_t clipper_rect64_width(ClipperRect64 *r);
+int64_t clipper_rect64_height(ClipperRect64 *r);
+ClipperPoint64 clipper_rect64_midpoint(ClipperRect64 *r);
+ClipperPath64 *clipper_rect64_as_path(void *mem, ClipperRect64 *r);
+int clipper_rect64_contains_pt(ClipperRect64 *r, ClipperPoint64 pt);
+int clipper_rect64_contains_rect(ClipperRect64 *a, ClipperRect64 *b);
+void clipper_rect64_scale(ClipperRect64 *r, double scale);
+int clipper_rect64_is_empty(ClipperRect64 *r);
+int clipper_rect64_intersects(ClipperRect64 *a, ClipperRect64 *b);
+
+// RectD Methods
+
+double clipper_rectd_width(ClipperRectD *r);
+double clipper_rectd_height(ClipperRectD *r);
+ClipperPointD clipper_rectd_midpoint(ClipperRectD *r);
+ClipperPathD *clipper_rectd_as_path(void *mem, ClipperRectD *r);
+int clipper_rectd_contains_pt(ClipperRectD *r, ClipperPointD pt);
+int clipper_rectd_contains_rect(ClipperRectD *a, ClipperRectD *b);
+void clipper_rectd_scale(ClipperRectD *r, double scale);
+int clipper_rectd_is_empty(ClipperRectD *r);
+int clipper_rectd_intersects(ClipperRectD *a, ClipperRectD *b);
+
+// Clipper Contsructors
+
+ClipperClipper64 *clipper_clipper64(void *mem);
+ClipperClipperD *clipper_clipperd(void *mem, int precision);
+
+// Clipper64 Setters / Getters
+
+void clipper_clipper64_set_preserve_collinear(ClipperClipper64 *c, int t);
+void clipper_clipper64_set_reverse_solution(ClipperClipper64 *c, int t);
+int clipper_clipper64_get_preserve_collinear(ClipperClipper64 *c);
+int clipper_clipper64_get_reverse_solution(ClipperClipper64 *c);
+void clipper_clipper64_clear(ClipperClipper64 *c);
+
+// ClipperD Setters / Getters
+//
+void clipper_clipperd_set_preserve_collinear(ClipperClipperD *c, int t);
+void clipper_clipperd_set_reverse_solution(ClipperClipperD *c, int t);
+int clipper_clipperd_get_preserve_collinear(ClipperClipperD *c);
+int clipper_clipperd_get_reverse_solution(ClipperClipperD *c);
+void clipper_clipperd_clear(ClipperClipperD *c);
+
+// Clipper64 Methods
+
+void clipper_clipper64_add_subject(ClipperClipper64 *c,
+                                   ClipperPaths64 *subjects);
+void clipper_clipper64_add_open_subject(ClipperClipper64 *c,
+                                        ClipperPaths64 *open_subjects);
+void clipper_clipper64_add_clip(ClipperClipper64 *c, ClipperPaths64 *clips);
+int clipper_clipper64_execute(ClipperClipper64 *c64, ClipperClipType ct,
+                              ClipperFillRule fr, ClipperPaths64 *closed,
+                              ClipperPaths64 *open);
+int clipper_clipper64_execute_tree(ClipperClipper64 *c64, ClipperClipType ct,
+                                   ClipperFillRule fr, ClipperPolyTree64 *tree);
+int clipper_clipper64_execute_tree_with_open(ClipperClipper64 *c64,
+                                             ClipperClipType ct,
+                                             ClipperFillRule fr,
+                                             ClipperPolyTree64 *tree,
+                                             ClipperPaths64 *open);
+
+// ClipperD Methods
+
+void clipper_clipperd_add_subject(ClipperClipperD *c, ClipperPathsD *subjects);
+void clipper_clipperd_add_open_subject(ClipperClipperD *c,
+                                       ClipperPathsD *open_subjects);
+void clipper_clipperd_add_clip(ClipperClipperD *c, ClipperPathsD *clips);
+int clipper_clipperd_execute(ClipperClipperD *cD, ClipperClipType ct,
+                             ClipperFillRule fr, ClipperPathsD *closed,
+                             ClipperPathsD *open);
+int clipper_clipperd_execute_tree(ClipperClipperD *cD, ClipperClipType ct,
+                                  ClipperFillRule fr, ClipperPolyTreeD *tree);
+int clipper_clipperd_execute_tree_with_open(ClipperClipperD *cD,
+                                            ClipperClipType ct,
+                                            ClipperFillRule fr,
+                                            ClipperPolyTreeD *tree,
+                                            ClipperPathsD *open);
 
 // destruction
 
