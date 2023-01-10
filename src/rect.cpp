@@ -90,6 +90,18 @@ int clipper_rectd_intersects(ClipperRectD *a, ClipperRectD *b) {
   return from_c(a)->Intersects(*from_c(b));
 }
 
+// Conversion (to C)
+
+struct ClipperRect64 clipper_rect64_to_struct(ClipperRect64 *rect) {
+  auto r = *from_c(rect);
+  return {r.left, r.top, r.right, r.bottom};
+}
+
+struct ClipperRectD clipper_rectd_to_struct(ClipperRectD *rect) {
+  auto r = *from_c(rect);
+  return {r.left, r.top, r.right, r.bottom};
+}
+
 #ifdef __cplusplus
 }
 #endif

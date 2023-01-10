@@ -35,6 +35,3 @@ Clipper2Lib::ClipType from_c(ClipperClipType ct);
 Clipper2Lib::FillRule from_c(ClipperFillRule fr);
 Clipper2Lib::JoinType from_c(ClipperJoinType jt);
 Clipper2Lib::EndType from_c(ClipperEndType et);
-
-struct ClipperRect64 to_struct(Clipper2Lib::Rect64 rect);
-struct ClipperRectD to_struct(Clipper2Lib::RectD rect);

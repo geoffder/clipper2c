@@ -243,13 +243,3 @@ Clipper2Lib::EndType from_c(ClipperEndType et) {
   };
   return endtype;
 }
-
-struct ClipperRect64 to_struct(Clipper2Lib::Rect64 rect) {
-  struct ClipperRect64 r = {rect.left, rect.top, rect.right, rect.bottom};
-  return r;
-}
-
-struct ClipperRectD to_struct(Clipper2Lib::RectD rect) {
-  struct ClipperRectD r = {rect.left, rect.top, rect.right, rect.bottom};
-  return r;
-}

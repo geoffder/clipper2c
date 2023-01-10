@@ -234,6 +234,11 @@ void clipper_rectd_scale(ClipperRectD *r, double scale);
 int clipper_rectd_is_empty(ClipperRectD *r);
 int clipper_rectd_intersects(ClipperRectD *a, ClipperRectD *b);
 
+// Rect Conversions (to C)
+
+struct ClipperRect64 clipper_rect64_to_struct(ClipperRect64 *rect);
+struct ClipperRectD clipper_rectd_to_struct(ClipperRectD *rect);
+
 // Clipper Contsructors
 
 ClipperClipper64 *clipper_clipper64(void *mem);
