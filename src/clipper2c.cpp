@@ -326,6 +326,26 @@ size_t clipper_pathsd_length(ClipperPathsD *paths) {
   return from_c(paths)->size();
 }
 
+size_t *clipper_paths64_lengths(void *mem, ClipperPaths64 *paths) {
+  auto lens = reinterpret_cast<size_t *>(mem);
+  auto ps = *from_c(paths);
+  auto n = ps.size();
+  for (int i = 0; i < n; ++i) {
+    lens[i] = ps[i].size();
+  }
+  return lens;
+}
+
+size_t *clipper_pathsd_lengths(void *mem, ClipperPathsD *paths) {
+  auto lens = reinterpret_cast<size_t *>(mem);
+  auto ps = *from_c(paths);
+  auto n = ps.size();
+  for (int i = 0; i < n; ++i) {
+    lens[i] = ps[i].size();
+  }
+  return lens;
+}
+
 ClipperPath64 *clipper_paths64_get(void *mem, ClipperPaths64 *paths,
                                    size_t idx) {
   return to_c(new (mem) Path64((*from_c(paths))[idx]));
@@ -333,6 +353,32 @@ ClipperPath64 *clipper_paths64_get(void *mem, ClipperPaths64 *paths,
 
 ClipperPathD *clipper_pathsd_get(void *mem, ClipperPathsD *paths, size_t idx) {
   return to_c(new (mem) PathD((*from_c(paths))[idx]));
+}
+
+ClipperPoint64 **clipper_paths64_to_points(void **mem, ClipperPaths64 *paths) {
+  auto ps = *from_c(paths);
+  auto n = ps.size();
+  ClipperPoint64 **pts = reinterpret_cast<ClipperPoint64 **>(mem);
+  for (int i = 0; i < n; ++i) {
+    auto len = ps[i].size();
+    for (int j = 0; j < len; ++j) {
+      pts[i][j] = {ps[i][j].x, ps[i][j].y};
+    }
+  }
+  return pts;
+}
+
+ClipperPointD **clipper_pathsd_to_points(void **mem, ClipperPathsD *paths) {
+  auto ps = *from_c(paths);
+  auto n = ps.size();
+  ClipperPointD **pts = reinterpret_cast<ClipperPointD **>(mem);
+  for (int i = 0; i < n; ++i) {
+    auto len = ps[i].size();
+    for (int j = 0; j < len; ++j) {
+      pts[i][j] = {ps[i][j].x, ps[i][j].y};
+    }
+  }
+  return pts;
 }
 
 // Path Transforms
