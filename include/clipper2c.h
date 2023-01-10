@@ -4,6 +4,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "clipper64.h"
+#include "clipperd.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -103,6 +106,18 @@ ClipperPathsD *clipper_pathsd_of_paths(void *mem, ClipperPathD **paths,
                                        size_t len_paths);
 void clipper_paths64_add_path(ClipperPaths64 *paths, ClipperPath64 *p);
 void clipper_pathsd_add_path(ClipperPathsD *paths, ClipperPathD *p);
+
+// Path Conversions (to C)
+
+size_t clipper_path64_length(ClipperPath64 *path);
+size_t clipper_pathd_length(ClipperPathD *path);
+ClipperPoint64 *clipper_path64_to_points(void *mem, ClipperPath64 *path);
+ClipperPointD *clipper_pathd_to_points(void *mem, ClipperPathD *path);
+size_t clipper_paths64_length(ClipperPaths64 *paths);
+size_t clipper_pathsd_length(ClipperPathsD *paths);
+ClipperPath64 *clipper_paths64_get(void *mem, ClipperPaths64 *paths,
+                                   size_t idx);
+ClipperPathD *clipper_pathsd_get(void *mem, ClipperPathsD *paths, size_t idx);
 
 // Path Transformations
 

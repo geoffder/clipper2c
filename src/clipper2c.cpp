@@ -7,6 +7,8 @@
 #include "types.h"
 #include <clipper2c.h>
 
+#include "clipper64.cpp"
+#include "clipperd.cpp"
 #include "polytree.cpp"
 #include "rect.cpp"
 
@@ -288,6 +290,51 @@ void clipper_pathsd_add_path(ClipperPathsD *paths, ClipperPathD *p) {
   from_c(paths)->push_back(*from_c(p));
 }
 
+// Path Conversions (to C)
+
+size_t clipper_path64_length(ClipperPath64 *path) {
+  return from_c(path)->size();
+}
+
+size_t clipper_pathd_length(ClipperPathD *path) { return from_c(path)->size(); }
+
+ClipperPoint64 *clipper_path64_to_points(void *mem, ClipperPath64 *path) {
+  auto p = *from_c(path);
+  auto len = p.size();
+  ClipperPoint64 *pts = reinterpret_cast<ClipperPoint64 *>(mem);
+  for (int i = 0; i < len; ++i) {
+    pts[i] = {p[i].x, p[i].y};
+  }
+  return pts;
+}
+
+ClipperPointD *clipper_pathd_to_points(void *mem, ClipperPathD *path) {
+  auto p = *from_c(path);
+  auto len = p.size();
+  ClipperPointD *pts = reinterpret_cast<ClipperPointD *>(mem);
+  for (int i = 0; i < len; ++i) {
+    pts[i] = {p[i].x, p[i].y};
+  }
+  return pts;
+}
+
+size_t clipper_paths64_length(ClipperPaths64 *paths) {
+  return from_c(paths)->size();
+}
+
+size_t clipper_pathsd_length(ClipperPathsD *paths) {
+  return from_c(paths)->size();
+}
+
+ClipperPath64 *clipper_paths64_get(void *mem, ClipperPaths64 *paths,
+                                   size_t idx) {
+  return to_c(new (mem) Path64((*from_c(paths))[idx]));
+}
+
+ClipperPathD *clipper_pathsd_get(void *mem, ClipperPathsD *paths, size_t idx) {
+  return to_c(new (mem) PathD((*from_c(paths))[idx]));
+}
+
 // Path Transforms
 
 ClipperPath64 *clipper_path64_translate(void *mem, ClipperPath64 *path,
@@ -420,6 +467,8 @@ size_t clipper_rect64_size() { return sizeof(Rect64); }
 size_t clipper_rectd_size() { return sizeof(RectD); }
 size_t clipper_polytree64_size() { return sizeof(PolyTree64); }
 size_t clipper_polytreed_size() { return sizeof(PolyTreeD); }
+size_t clipper_clipper64_size() { return sizeof(Clipper64); }
+size_t clipper_clipperd_size() { return sizeof(ClipperD); }
 
 // destruction
 
@@ -435,6 +484,10 @@ void clipper_destruct_polytree64(ClipperPolyTree64 *p) {
 void clipper_destruct_polytreed(ClipperPolyTreeD *p) {
   from_c(p)->~PolyTreeD();
 }
+void clipper_destruct_clipper64(ClipperClipper64 *p) {
+  from_c(p)->~Clipper64();
+}
+void clipper_destruct_clipperd(ClipperClipperD *p) { from_c(p)->~ClipperD(); }
 
 // pointer free + destruction
 
@@ -446,6 +499,8 @@ void clipper_delete_rect64(ClipperRect64 *p) { delete from_c(p); }
 void clipper_delete_rectd(ClipperRectD *p) { delete from_c(p); }
 void clipper_delete_polytree64(ClipperPolyTree64 *p) { delete from_c(p); }
 void clipper_delete_polytreed(ClipperPolyTreeD *p) { delete from_c(p); }
+void clipper_delete_clipper64(ClipperClipper64 *p) { delete from_c(p); }
+void clipper_delete_clipperd(ClipperClipperD *p) { delete from_c(p); }
 
 #ifdef __cplusplus
 }
