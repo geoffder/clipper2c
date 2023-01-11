@@ -1,4 +1,5 @@
 #include <clipper2/clipper.h>
+#include <clipper2c.h>
 
 #include "conv.h"
 #include "types.h"

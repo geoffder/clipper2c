@@ -2,6 +2,7 @@
 
 #include "conv.h"
 #include "types.h"
+#include <clipper2c.h>
 #include <stdint.h>
 
 using namespace Clipper2Lib;

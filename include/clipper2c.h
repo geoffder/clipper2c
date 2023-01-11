@@ -295,6 +295,19 @@ int clipper_clipperd_execute_tree_with_open(ClipperClipperD *cD,
                                             ClipperPolyTreeD *tree,
                                             ClipperPathsD *open);
 
+// memory size
+
+size_t clipper_path64_size();
+size_t clipper_pathd_size();
+size_t clipper_paths64_size();
+size_t clipper_pathsd_size();
+size_t clipper_rect64_size();
+size_t clipper_rectd_size();
+size_t clipper_polytree64_size();
+size_t clipper_polytreed_size();
+size_t clipper_clipper64_size();
+size_t clipper_clipperd_size();
+
 // destruction
 
 void clipper_destruct_path64(ClipperPath64 *p);
@@ -305,6 +318,8 @@ void clipper_destruct_rect64(ClipperRect64 *p);
 void clipper_destruct_rectd(ClipperRectD *p);
 void clipper_destruct_polytree64(ClipperPolyTree64 *p);
 void clipper_destruct_polytreed(ClipperPolyTreeD *p);
+void clipper_destruct_clipper64(ClipperClipper64 *p);
+void clipper_destruct_clipperd(ClipperClipperD *p);
 
 // pointer free + destruction
 
@@ -316,6 +331,8 @@ void clipper_delete_rect64(ClipperRect64 *p);
 void clipper_delete_rectd(ClipperRectD *p);
 void clipper_delete_polytree64(ClipperPolyTree64 *p);
 void clipper_delete_polytreed(ClipperPolyTreeD *p);
+void clipper_delete_clipper64(ClipperClipper64 *p);
+void clipper_delete_clipperd(ClipperClipperD *p);
 
 #ifdef __cplusplus
 }
