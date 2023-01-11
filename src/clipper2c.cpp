@@ -348,12 +348,11 @@ size_t *clipper_pathsd_lengths(void *mem, ClipperPathsD *paths) {
   return lens;
 }
 
-ClipperPath64 *clipper_paths64_get(void *mem, ClipperPaths64 *paths,
-                                   size_t idx) {
+ClipperPath64 *clipper_paths64_get(void *mem, ClipperPaths64 *paths, int idx) {
   return to_c(new (mem) Path64((*from_c(paths))[idx]));
 }
 
-ClipperPathD *clipper_pathsd_get(void *mem, ClipperPathsD *paths, size_t idx) {
+ClipperPathD *clipper_pathsd_get(void *mem, ClipperPathsD *paths, int idx) {
   return to_c(new (mem) PathD((*from_c(paths))[idx]));
 }
 

@@ -22,12 +22,11 @@ ClipperPolyTreeD *clipper_polytreed(void *mem, ClipperPolyTreeD *parent) {
 
 // PolyTree64 methods
 
-ClipperPolyTree64 *clipper_polytree64_get(ClipperPolyTree64 *pt, size_t idx) {
+ClipperPolyTree64 *clipper_polytree64_get(ClipperPolyTree64 *pt, int idx) {
   return to_c((*from_c(pt))[idx]);
 }
 
-ClipperPolyTree64 *clipper_polytree64_add_child(void *mem,
-                                                ClipperPolyTree64 *pt,
+ClipperPolyTree64 *clipper_polytree64_add_child(ClipperPolyTree64 *pt,
                                                 ClipperPath64 *path) {
   return to_c(from_c(pt)->AddChild(*from_c(path)));
 }
@@ -58,7 +57,7 @@ int clipper_polytree64_fully_contains_children(ClipperPolyTree64 *pt) {
 
 // PolyTreeD methods
 
-ClipperPolyTreeD *clipper_polytreed_get(ClipperPolyTreeD *pt, size_t idx) {
+ClipperPolyTreeD *clipper_polytreed_get(ClipperPolyTreeD *pt, int idx) {
   return to_c((*from_c(pt))[idx]);
 }
 
@@ -70,7 +69,7 @@ double clipper_polytreed_inv_scale(ClipperPolyTreeD *pt) {
   return from_c(pt)->InvScale();
 }
 
-ClipperPolyTreeD *clipper_polytreed_add_child(void *mem, ClipperPolyTreeD *pt,
+ClipperPolyTreeD *clipper_polytreed_add_child(ClipperPolyTreeD *pt,
                                               ClipperPath64 *path) {
   return to_c(from_c(pt)->AddChild(*from_c(path)));
 }
