@@ -109,21 +109,23 @@ void clipper_pathsd_add_path(ClipperPathsD *paths, ClipperPathD *p);
 
 size_t clipper_path64_length(ClipperPath64 *path);
 size_t clipper_pathd_length(ClipperPathD *path);
+ClipperPoint64 clipper_path64_get_point(ClipperPath64 *path, int idx);
+ClipperPointD clipper_pathd_get_point(ClipperPathD *path, int idx);
 ClipperPoint64 *clipper_path64_to_points(void *mem, ClipperPath64 *path);
 ClipperPointD *clipper_pathd_to_points(void *mem, ClipperPathD *path);
 size_t clipper_paths64_length(ClipperPaths64 *paths);
 size_t clipper_pathsd_length(ClipperPathsD *paths);
 size_t *clipper_paths64_lengths(void *mem, ClipperPaths64 *paths);
 size_t *clipper_pathsd_lengths(void *mem, ClipperPathsD *paths);
-size_t clipper_paths64_get_length(void *mem, ClipperPaths64 *paths, int idx);
-size_t clipper_pathsd_get_length(void *mem, ClipperPathsD *paths, int idx);
+size_t clipper_paths64_path_length(ClipperPaths64 *paths, int idx);
+size_t clipper_pathsd_path_length(ClipperPathsD *paths, int idx);
 ClipperPath64 *clipper_paths64_get_path(void *mem, ClipperPaths64 *paths,
                                         int idx);
 ClipperPathD *clipper_pathsd_get_path(void *mem, ClipperPathsD *paths, int idx);
-ClipperPoint64 clipper_paths64_get(void *mem, ClipperPaths64 *paths,
-                                   int path_idx, int point_idx);
-ClipperPointD clipper_pathsd_get(void *mem, ClipperPathsD *paths, int path_idx,
-                                 int point_idx);
+ClipperPoint64 clipper_paths64_get_point(ClipperPaths64 *paths, int path_idx,
+                                         int point_idx);
+ClipperPointD clipper_pathsd_get_point(ClipperPathsD *paths, int path_idx,
+                                       int point_idx);
 ClipperPoint64 **clipper_paths64_to_points(void **mem, ClipperPaths64 *paths);
 ClipperPointD **clipper_pathsd_to_points(void **mem, ClipperPathsD *paths);
 
