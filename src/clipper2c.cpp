@@ -348,12 +348,34 @@ size_t *clipper_pathsd_lengths(void *mem, ClipperPathsD *paths) {
   return lens;
 }
 
-ClipperPath64 *clipper_paths64_get(void *mem, ClipperPaths64 *paths, int idx) {
+size_t clipper_paths64_get_length(void *mem, ClipperPaths64 *paths, int idx) {
+  return (*from_c(paths))[idx].size();
+}
+
+size_t clipper_pathsd_get_length(void *mem, ClipperPathsD *paths, int idx) {
+  return (*from_c(paths))[idx].size();
+}
+
+ClipperPath64 *clipper_paths64_get_path(void *mem, ClipperPaths64 *paths,
+                                        int idx) {
   return to_c(new (mem) Path64((*from_c(paths))[idx]));
 }
 
-ClipperPathD *clipper_pathsd_get(void *mem, ClipperPathsD *paths, int idx) {
+ClipperPathD *clipper_pathsd_get_path(void *mem, ClipperPathsD *paths,
+                                      int idx) {
   return to_c(new (mem) PathD((*from_c(paths))[idx]));
+}
+
+ClipperPoint64 clipper_paths64_get(void *mem, ClipperPaths64 *paths,
+                                   int path_idx, int point_idx) {
+  auto p = (*from_c(paths))[path_idx];
+  return to_c(p[point_idx]);
+}
+
+ClipperPointD clipper_pathsd_get(void *mem, ClipperPathsD *paths, int path_idx,
+                                 int point_idx) {
+  auto p = (*from_c(paths))[path_idx];
+  return to_c(p[point_idx]);
 }
 
 ClipperPoint64 **clipper_paths64_to_points(void **mem, ClipperPaths64 *paths) {
