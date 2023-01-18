@@ -12,6 +12,11 @@ ClipperPaths64 *clipper_paths64_boolean_op(void *mem, ClipperClipType cliptype,
                                            ClipperFillRule fillrule,
                                            ClipperPaths64 *subjects,
                                            ClipperPaths64 *clips);
+void clipper_paths64_boolean_op_tree(ClipperClipType cliptype,
+                                     ClipperFillRule fillrule,
+                                     ClipperPaths64 *subjects,
+                                     ClipperPaths64 *clips,
+                                     ClipperPolyTree64 *solution);
 ClipperPaths64 *clipper_paths64_intersect(void *mem, ClipperPaths64 *subjects,
                                           ClipperPaths64 *clips,
                                           ClipperFillRule fillrule);
@@ -29,6 +34,9 @@ ClipperPathsD *clipper_pathsd_boolean_op(void *mem, ClipperClipType cliptype,
                                          ClipperPathsD *subjects,
                                          ClipperPathsD *clips,
                                          int decimal_prec);
+void clipper_pathsd_boolean_op_tree(
+    ClipperClipType cliptype, ClipperFillRule fillrule, ClipperPathsD *subjects,
+    ClipperPathsD *clips, ClipperPolyTreeD *solution, int decimal_prec);
 ClipperPathsD *clipper_pathsd_intersect(void *mem, ClipperPathsD *subjects,
                                         ClipperPathsD *clips,
                                         ClipperFillRule fillrule,
