@@ -1,6 +1,7 @@
 #include <clipper2/clipper.h>
 #include <clipper2c.h>
 
+#include "clipper2/clipper.engine.h"
 #include "conv.h"
 #include "types.h"
 #include <stdint.h>
@@ -23,7 +24,12 @@ ClipperPolyTreeD *clipper_polytreed(void *mem, ClipperPolyTreeD *parent) {
 
 // PolyTree64 methods
 
-ClipperPolyTree64 *clipper_polytree64_get(ClipperPolyTree64 *pt, int idx) {
+const ClipperPolyTree64 *clipper_polytree64_parent(ClipperPolyTree64 *pt) {
+  return reinterpret_cast<const ClipperPolyTree64 *>(from_c(pt)->Parent());
+}
+
+ClipperPolyTree64 *clipper_polytree64_get_child(ClipperPolyTree64 *pt,
+                                                int idx) {
   return to_c((*from_c(pt))[idx]);
 }
 
@@ -36,6 +42,14 @@ void clipper_polytree64_clear(ClipperPolyTree64 *pt) { from_c(pt)->Clear(); }
 
 size_t clipper_polytree64_count(ClipperPolyTree64 *pt) {
   return from_c(pt)->Count();
+}
+
+int clipper_polytree64_level(ClipperPolyTree64 *pt) {
+  return from_c(pt)->Level();
+}
+
+int clipper_polytree64_is_hole(ClipperPolyTree64 *pt) {
+  return from_c(pt)->IsHole();
 }
 
 ClipperPath64 *clipper_polytree64_polygon(void *mem, ClipperPolyTree64 *pt) {
@@ -58,7 +72,11 @@ int clipper_polytree64_fully_contains_children(ClipperPolyTree64 *pt) {
 
 // PolyTreeD methods
 
-ClipperPolyTreeD *clipper_polytreed_get(ClipperPolyTreeD *pt, int idx) {
+const ClipperPolyTreeD *clipper_polytreed_parent(ClipperPolyTreeD *pt) {
+  return reinterpret_cast<const ClipperPolyTreeD *>(from_c(pt)->Parent());
+}
+
+ClipperPolyTreeD *clipper_polytreed_get_child(ClipperPolyTreeD *pt, int idx) {
   return to_c((*from_c(pt))[idx]);
 }
 
@@ -79,6 +97,14 @@ void clipper_polytreed_clear(ClipperPolyTreeD *pt) { from_c(pt)->Clear(); }
 
 size_t clipper_polytreed_count(ClipperPolyTreeD *pt) {
   return from_c(pt)->Count();
+}
+
+int clipper_polytreed_level(ClipperPolyTreeD *pt) {
+  return from_c(pt)->Level();
+}
+
+int clipper_polytreed_is_hole(ClipperPolyTreeD *pt) {
+  return from_c(pt)->IsHole();
 }
 
 ClipperPathD *clipper_polytreed_polygon(void *mem, ClipperPolyTreeD *pt) {
