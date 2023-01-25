@@ -28,9 +28,9 @@ const ClipperPolyTree64 *clipper_polytree64_parent(ClipperPolyTree64 *pt) {
   return reinterpret_cast<const ClipperPolyTree64 *>(from_c(pt)->Parent());
 }
 
-ClipperPolyTree64 *clipper_polytree64_get_child(ClipperPolyTree64 *pt,
-                                                int idx) {
-  return to_c((*from_c(pt))[idx]);
+const ClipperPolyTree64 *clipper_polytree64_get_child(ClipperPolyTree64 *pt,
+                                                      size_t idx) {
+  return reinterpret_cast<const ClipperPolyTree64 *>(from_c(pt)->Child(idx));
 }
 
 ClipperPolyTree64 *clipper_polytree64_add_child(ClipperPolyTree64 *pt,
@@ -67,7 +67,7 @@ ClipperPaths64 *clipper_polytree64_to_paths(void *mem, ClipperPolyTree64 *pt) {
 }
 
 int clipper_polytree64_fully_contains_children(ClipperPolyTree64 *pt) {
-  return CheckPolytreeFullyContainsChildren(from_c(pt));
+  return CheckPolytreeFullyContainsChildren(*from_c(pt));
 }
 
 // PolyTreeD methods
@@ -76,8 +76,9 @@ const ClipperPolyTreeD *clipper_polytreed_parent(ClipperPolyTreeD *pt) {
   return reinterpret_cast<const ClipperPolyTreeD *>(from_c(pt)->Parent());
 }
 
-ClipperPolyTreeD *clipper_polytreed_get_child(ClipperPolyTreeD *pt, int idx) {
-  return to_c((*from_c(pt))[idx]);
+const ClipperPolyTreeD *clipper_polytreed_get_child(ClipperPolyTreeD *pt,
+                                                    size_t idx) {
+  return reinterpret_cast<const ClipperPolyTreeD *>(from_c(pt)->Child(idx));
 }
 
 void clipper_polytreed_set_inv_scale(ClipperPolyTreeD *pt, double value) {

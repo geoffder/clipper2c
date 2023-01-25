@@ -198,7 +198,8 @@ ClipperPolyTreeD *clipper_polytreed(void *mem, ClipperPolyTreeD *parent);
 // PolyTree64 Methods
 
 const ClipperPolyTree64 *clipper_polytree64_parent(ClipperPolyTree64 *pt);
-ClipperPolyTree64 *clipper_polytree64_get_child(ClipperPolyTree64 *pt, int idx);
+const ClipperPolyTree64 *clipper_polytree64_get_child(ClipperPolyTree64 *pt,
+                                                      size_t idx);
 ClipperPolyTree64 *clipper_polytree64_add_child(ClipperPolyTree64 *pt,
                                                 ClipperPath64 *path);
 void clipper_polytree64_clear(ClipperPolyTree64 *pt);
@@ -213,7 +214,8 @@ int clipper_polytree64_fully_contains_children(ClipperPolyTree64 *pt);
 // PolyTreeD Methods
 
 const ClipperPolyTreeD *clipper_polytreed_parent(ClipperPolyTreeD *pt);
-ClipperPolyTreeD *clipper_polytreed_get_child(ClipperPolyTreeD *pt, int idx);
+const ClipperPolyTreeD *clipper_polytreed_get_child(ClipperPolyTreeD *pt,
+                                                    size_t idx);
 void clipper_polytreed_set_inv_scale(ClipperPolyTreeD *pt, double value);
 double clipper_polytreed_inv_scale(ClipperPolyTreeD *pt);
 ClipperPolyTreeD *clipper_polytreed_add_child(ClipperPolyTreeD *pt,
