@@ -508,6 +508,82 @@ ClipperPathsD *clipper_pathsd_ramer_douglas_peucker(void *mem,
   return to_c(new (mem) PathsD(p));
 }
 
+ClipperPath64 *clipper_path64_strip_near_equal(void *mem, ClipperPath64 *path,
+                                               double max_dist_sqrd,
+                                               int is_closed_path) {
+  auto p = StripNearEqual(*from_c(path), max_dist_sqrd, is_closed_path);
+  return to_c(new (mem) Path64(p));
+}
+
+ClipperPathD *clipper_pathd_strip_near_equal(void *mem, ClipperPathD *path,
+                                             double max_dist_sqrd,
+                                             int is_closed_path) {
+  auto p = StripNearEqual(*from_c(path), max_dist_sqrd, is_closed_path);
+  return to_c(new (mem) PathD(p));
+}
+
+ClipperPaths64 *clipper_paths64_strip_near_equal(void *mem,
+                                                 ClipperPaths64 *paths,
+                                                 double max_dist_sqrd,
+                                                 int is_closed_paths) {
+  auto p = StripNearEqual(*from_c(paths), max_dist_sqrd, is_closed_paths);
+  return to_c(new (mem) Paths64(p));
+}
+
+ClipperPathsD *clipper_pathsd_strip_near_equal(void *mem, ClipperPathsD *paths,
+                                               double max_dist_sqrd,
+                                               int is_closed_paths) {
+  auto p = StripNearEqual(*from_c(paths), max_dist_sqrd, is_closed_paths);
+  return to_c(new (mem) PathsD(p));
+}
+
+ClipperPath64 *clipper_path64_strip_duplicates(void *mem, ClipperPath64 *path,
+                                               int is_closed_path) {
+  auto p = StripDuplicates(*from_c(path), is_closed_path);
+  return to_c(new (mem) Path64(p));
+}
+
+ClipperPathD *clipper_pathd_strip_duplicates(void *mem, ClipperPathD *path,
+                                             int is_closed_path) {
+  auto p = StripDuplicates(*from_c(path), is_closed_path);
+  return to_c(new (mem) PathD(p));
+}
+
+ClipperPaths64 *clipper_paths64_strip_duplicates(void *mem,
+                                                 ClipperPaths64 *paths,
+                                                 int is_closed_paths) {
+  auto p = StripDuplicates(*from_c(paths), is_closed_paths);
+  return to_c(new (mem) Paths64(p));
+}
+
+ClipperPathsD *clipper_pathsd_strip_duplicates(void *mem, ClipperPathsD *paths,
+                                               int is_closed_paths) {
+  auto p = StripDuplicates(*from_c(paths), is_closed_paths);
+  return to_c(new (mem) PathsD(p));
+}
+
+// Path Conversions
+
+ClipperPath64 *clipper_pathd_to_path64(void *mem, ClipperPathD *path) {
+  auto p = PathDToPath64(*from_c(path));
+  return to_c(new (mem) Path64(p));
+}
+
+ClipperPathD *clipper_path64_to_pathd(void *mem, ClipperPath64 *path) {
+  auto p = Path64ToPathD(*from_c(path));
+  return to_c(new (mem) PathD(p));
+}
+
+ClipperPaths64 *clipper_pathsd_to_paths64(void *mem, ClipperPathsD *paths) {
+  auto p = PathsDToPaths64(*from_c(paths));
+  return to_c(new (mem) Paths64(p));
+}
+
+ClipperPathsD *clipper_paths64_to_pathsd(void *mem, ClipperPaths64 *paths) {
+  auto p = Paths64ToPathsD(*from_c(paths));
+  return to_c(new (mem) PathsD(p));
+}
+
 // Minkowski
 
 ClipperPaths64 *clipper_path64_minkowski_sum(void *mem, ClipperPath64 *pattern,
@@ -563,6 +639,36 @@ int clipper_pointd_near_collinear(ClipperPointD a, ClipperPointD b,
   double cp = std::abs(pointd_cross_product(a, b, c));
   return (cp * cp) / (pointd_distance_sqr(a, b) * pointd_distance_sqr(b, c)) <
          sin_sqrd_min_angle_rads;
+}
+
+double clipper_pathd_area(ClipperPathD *path) { return Area(*from_c(path)); }
+
+double clipper_path64_area(ClipperPath64 *path) { return Area(*from_c(path)); }
+
+double clipper_pathsd_area(ClipperPathsD *paths) {
+  return Area(*from_c(paths));
+}
+
+double clipper_paths64_area(ClipperPaths64 *paths) {
+  return Area(*from_c(paths));
+}
+
+int clipper_pathd_is_positive(ClipperPathD *path) {
+  return IsPositive(*from_c(path));
+}
+
+int clipper_path64_is_positive(ClipperPath64 *path) {
+  return IsPositive(*from_c(path));
+}
+
+ClipperPointInPolygonResult clipper_point_in_pathd(ClipperPathD *path,
+                                                   ClipperPointD pt) {
+  return to_c(PointInPolygon(from_c(pt), *from_c(path)));
+}
+
+ClipperPointInPolygonResult clipper_point_in_path64(ClipperPath64 *path,
+                                                    ClipperPoint64 pt) {
+  return to_c(PointInPolygon(from_c(pt), *from_c(path)));
 }
 
 // memory size

@@ -19,6 +19,7 @@ ClipperClipType to_c(Clipper2Lib::ClipType cliptype);
 ClipperFillRule to_c(Clipper2Lib::FillRule fillrule);
 ClipperJoinType to_c(Clipper2Lib::JoinType jointype);
 ClipperEndType to_c(Clipper2Lib::EndType endtype);
+ClipperPointInPolygonResult to_c(Clipper2Lib::PointInPolygonResult res);
 
 Clipper2Lib::Point64 from_c(ClipperPoint64 p);
 Clipper2Lib::PointD from_c(ClipperPointD p);
@@ -37,3 +38,4 @@ Clipper2Lib::ClipType from_c(ClipperClipType ct);
 Clipper2Lib::FillRule from_c(ClipperFillRule fr);
 Clipper2Lib::JoinType from_c(ClipperJoinType jt);
 Clipper2Lib::EndType from_c(ClipperEndType et);
+Clipper2Lib::PointInPolygonResult from_c(ClipperPointInPolygonResult res);

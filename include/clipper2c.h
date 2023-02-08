@@ -170,6 +170,36 @@ ClipperPaths64 *clipper_paths64_ramer_douglas_peucker(void *mem,
 ClipperPathsD *clipper_pathsd_ramer_douglas_peucker(void *mem,
                                                     ClipperPathsD *paths,
                                                     double epsilon);
+ClipperPath64 *clipper_path64_strip_near_equal(void *mem, ClipperPath64 *path,
+                                               double max_dist_sqrd,
+                                               int is_closed_path);
+ClipperPathD *clipper_pathd_strip_near_equal(void *mem, ClipperPathD *path,
+                                             double max_dist_sqrd,
+                                             int is_closed_path);
+ClipperPaths64 *clipper_paths64_strip_near_equal(void *mem,
+                                                 ClipperPaths64 *paths,
+                                                 double max_dist_sqrd,
+                                                 int is_closed_paths);
+ClipperPathsD *clipper_pathsd_strip_near_equal(void *mem, ClipperPathsD *paths,
+                                               double max_dist_sqrd,
+                                               int is_closed_paths);
+ClipperPath64 *clipper_path64_strip_duplicates(void *mem, ClipperPath64 *path,
+                                               int is_closed_path);
+ClipperPathD *clipper_pathd_strip_duplicates(void *mem, ClipperPathD *path,
+                                             int is_closed_path);
+ClipperPaths64 *clipper_paths64_strip_duplicates(void *mem,
+                                                 ClipperPaths64 *paths,
+                                                 int is_closed_paths);
+ClipperPathsD *clipper_pathsd_strip_duplicates(void *mem, ClipperPathsD *paths,
+                                               int is_closed_paths);
+
+// Path Conversions
+
+ClipperPathD *clipper_path64_to_pathd(void *mem, ClipperPath64 *path);
+ClipperPath64 *clipper_pathd_to_pathd(void *mem, ClipperPathD *path);
+ClipperPathsD *clipper_paths64_to_pathsd(void *mem, ClipperPaths64 *paths);
+ClipperPaths64 *clipper_pathsd_to_pathsd(void *mem, ClipperPathsD *paths);
+
 // Minkowski
 
 ClipperPaths64 *clipper_path64_minkowski_sum(void *mem, ClipperPath64 *pattern,
@@ -195,6 +225,16 @@ int clipper_point64_near_collinear(ClipperPoint64 a, ClipperPoint64 b,
 int clipper_pointd_near_collinear(ClipperPointD a, ClipperPointD b,
                                   ClipperPointD c,
                                   double sin_sqrd_min_angle_rads);
+double clipper_pathd_area(ClipperPathD *path);
+double clipper_path64_area(ClipperPath64 *path);
+double clipper_pathsd_area(ClipperPathsD *paths);
+double clipper_paths64_area(ClipperPaths64 *paths);
+int clipper_pathd_is_positive(ClipperPathD *path);
+int clipper_path64_is_positive(ClipperPath64 *path);
+ClipperPointInPolygonResult clipper_point_in_path64(ClipperPath64 *path,
+                                                    ClipperPoint64 pt);
+ClipperPointInPolygonResult clipper_point_in_pathd(ClipperPathD *path,
+                                                   ClipperPointD pt);
 
 // Class Interfaces
 
@@ -335,7 +375,7 @@ ClipperClipperOffset *clipper_clipperoffset(void *mem, double miter_limit,
                                             int preserve_collinear,
                                             int reverse_solution);
 
-// ClipperOffset Methods
+// ClipperOffset Setters / Getters
 
 void clipper_clipperoffset_set_miter_limit(ClipperClipperOffset *c, double l);
 void clipper_clipperoffset_set_arc_tolerance(ClipperClipperOffset *c, double t);
@@ -349,7 +389,7 @@ int clipper_clipperoffset_get_reverse_solution(ClipperClipperOffset *c);
 int clipper_clipperoffset_error_code(ClipperClipperOffset *c);
 void clipper_clipperoffset_clear(ClipperClipperOffset *c);
 
-// Methods
+// ClipperOffset Methods
 
 void clipper_clipperoffset_add_pathd(ClipperClipperOffset *c, ClipperPathD *p,
                                      ClipperJoinType jt, ClipperEndType et);

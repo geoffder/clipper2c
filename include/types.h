@@ -73,6 +73,12 @@ typedef enum ClipperEndType {
   ROUND_END
 } ClipperEndType;
 
+typedef enum ClipperPointInPolygonResult {
+  IS_ON,
+  IS_INSIDE,
+  IS_OUTSIDE
+} ClipperPointInPolygonResult;
+
 #ifdef __cplusplus
 }
 #endif

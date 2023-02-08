@@ -125,6 +125,21 @@ ClipperEndType to_c(Clipper2Lib::EndType endtype) {
   return et;
 }
 
+ClipperPointInPolygonResult to_c(Clipper2Lib::PointInPolygonResult result) {
+  ClipperPointInPolygonResult res = IS_OUTSIDE;
+  switch (result) {
+  case Clipper2Lib::PointInPolygonResult::IsOutside:
+    break;
+  case Clipper2Lib::PointInPolygonResult::IsInside:
+    res = IS_INSIDE;
+    break;
+  case Clipper2Lib::PointInPolygonResult::IsOn:
+    res = IS_ON;
+    break;
+  };
+  return res;
+}
+
 Clipper2Lib::Point64 from_c(ClipperPoint64 p) {
   return Clipper2Lib::Point64(p.x, p.y);
 }
@@ -250,4 +265,20 @@ Clipper2Lib::EndType from_c(ClipperEndType et) {
     break;
   };
   return endtype;
+}
+
+Clipper2Lib::PointInPolygonResult from_c(ClipperPointInPolygonResult result) {
+  Clipper2Lib::PointInPolygonResult res =
+      Clipper2Lib::PointInPolygonResult::IsOutside;
+  switch (result) {
+  case IS_OUTSIDE:
+    break;
+  case IS_INSIDE:
+    res = Clipper2Lib::PointInPolygonResult::IsInside;
+    break;
+  case IS_ON:
+    res = Clipper2Lib::PointInPolygonResult::IsOn;
+    break;
+  };
+  return res;
 }
