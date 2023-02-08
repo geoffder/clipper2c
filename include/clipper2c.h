@@ -151,6 +151,14 @@ ClipperPath64 *clipper_path64_trim_collinear(void *mem, ClipperPath64 *path,
                                              int is_open_path);
 ClipperPathD *clipper_pathd_trim_collinear(void *mem, ClipperPathD *path,
                                            int precision, int is_open_path);
+ClipperPath64 *clipper_path64_simplify(void *mem, ClipperPath64 *path,
+                                       double epsilon, int is_open_path);
+ClipperPathD *clipper_pathd_simplify(void *mem, ClipperPathD *path,
+                                     double epsilon, int is_open_path);
+ClipperPaths64 *clipper_paths64_simplify(void *mem, ClipperPaths64 *paths,
+                                         double epsilon, int is_open_paths);
+ClipperPathsD *clipper_pathsd_simplify(void *mem, ClipperPathsD *paths,
+                                       double epsilon, int is_open_paths);
 ClipperPath64 *clipper_path64_ramer_douglas_peucker(void *mem,
                                                     ClipperPath64 *path,
                                                     double epsilon);
@@ -320,6 +328,41 @@ int clipper_clipperd_execute_tree_with_open(ClipperClipperD *cD,
                                             ClipperPolyTreeD *tree,
                                             ClipperPathsD *open);
 
+// ClipperOffset Constructors
+
+ClipperClipperOffset *clipper_clipperoffset(void *mem, double miter_limit,
+                                            double arc_tolerance,
+                                            int preserve_collinear,
+                                            int reverse_solution);
+
+// ClipperOffset Methods
+
+void clipper_clipperoffset_set_miter_limit(ClipperClipperOffset *c, double l);
+void clipper_clipperoffset_set_arc_tolerance(ClipperClipperOffset *c, double t);
+void clipper_clipperoffset_set_preserve_collinear(ClipperClipperOffset *c,
+                                                  int t);
+void clipper_clipperoffset_set_reverse_solution(ClipperClipperOffset *c, int t);
+double clipper_clipperoffset_get_miter_limit(ClipperClipperOffset *c);
+double clipper_clipperoffset_get_arc_tolerance(ClipperClipperOffset *c);
+int clipper_clipperoffset_get_preserve_collinear(ClipperClipperOffset *c);
+int clipper_clipperoffset_get_reverse_solution(ClipperClipperOffset *c);
+int clipper_clipperoffset_error_code(ClipperClipperOffset *c);
+void clipper_clipperoffset_clear(ClipperClipperOffset *c);
+
+// Methods
+
+void clipper_clipperoffset_add_pathd(ClipperClipperOffset *c, ClipperPathD *p,
+                                     ClipperJoinType jt, ClipperEndType et);
+void clipper_clipperoffset_add_pathsd(ClipperClipperOffset *c, ClipperPathsD *p,
+                                      ClipperJoinType jt, ClipperEndType et);
+void clipper_clipperoffset_add_path64(ClipperClipperOffset *c, ClipperPath64 *p,
+                                      ClipperJoinType jt, ClipperEndType et);
+void clipper_clipperoffset_add_paths64(ClipperClipperOffset *c,
+                                       ClipperPaths64 *p, ClipperJoinType jt,
+                                       ClipperEndType et);
+ClipperPaths64 *
+clipper_clipperoffset_execute(void *mem, ClipperClipperOffset *c, double delta);
+
 // memory size
 
 size_t clipper_path64_size();
@@ -332,6 +375,7 @@ size_t clipper_polytree64_size();
 size_t clipper_polytreed_size();
 size_t clipper_clipper64_size();
 size_t clipper_clipperd_size();
+size_t clipper_clipperoffset_size();
 
 // destruction
 
@@ -345,6 +389,7 @@ void clipper_destruct_polytree64(ClipperPolyTree64 *p);
 void clipper_destruct_polytreed(ClipperPolyTreeD *p);
 void clipper_destruct_clipper64(ClipperClipper64 *p);
 void clipper_destruct_clipperd(ClipperClipperD *p);
+void clipper_destruct_clipperoffset(ClipperClipperOffset *p);
 
 // pointer free + destruction
 
@@ -358,6 +403,7 @@ void clipper_delete_polytree64(ClipperPolyTree64 *p);
 void clipper_delete_polytreed(ClipperPolyTreeD *p);
 void clipper_delete_clipper64(ClipperClipper64 *p);
 void clipper_delete_clipperd(ClipperClipperD *p);
+void clipper_delete_clipperoffset(ClipperClipperOffset *p);
 
 #ifdef __cplusplus
 }

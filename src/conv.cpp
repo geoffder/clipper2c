@@ -46,6 +46,10 @@ ClipperClipperD *to_c(Clipper2Lib::ClipperD *p) {
   return reinterpret_cast<ClipperClipperD *>(p);
 }
 
+ClipperClipperOffset *to_c(Clipper2Lib::ClipperOffset *p) {
+  return reinterpret_cast<ClipperClipperOffset *>(p);
+}
+
 ClipperClipType to_c(Clipper2Lib::ClipType cliptype) {
   ClipperClipType ct = NONE;
   switch (cliptype) {
@@ -167,6 +171,10 @@ Clipper2Lib::Clipper64 *from_c(ClipperClipper64 *p) {
 
 Clipper2Lib::ClipperD *from_c(ClipperClipperD *p) {
   return reinterpret_cast<Clipper2Lib::ClipperD *>(p);
+}
+
+Clipper2Lib::ClipperOffset *from_c(ClipperClipperOffset *p) {
+  return reinterpret_cast<Clipper2Lib::ClipperOffset *>(p);
 }
 
 Clipper2Lib::ClipType from_c(ClipperClipType fr) {

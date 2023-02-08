@@ -8,6 +8,7 @@ extern "C" {
 
 typedef struct ClipperClipper64 ClipperClipper64;
 typedef struct ClipperClipperD ClipperClipperD;
+typedef struct ClipperClipperOffset ClipperClipperOffset;
 typedef struct ClipperPath64 ClipperPath64;
 typedef struct ClipperPathD ClipperPathD;
 typedef struct ClipperPaths64 ClipperPaths64;

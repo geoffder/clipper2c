@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cstdint>
 
+#include "clipper2/clipper.offset.h"
 #include "conv.h"
 #include "types.h"
 #include <clipper2c.h>
@@ -155,22 +156,22 @@ ClipperPathsD *clipper_pathsd_inflate(void *mem, ClipperPathsD *paths,
 // Rect Clipping
 
 ClipperRect64 *clipper_path64_bounds(void *mem, ClipperPath64 *path) {
-  auto r = Bounds(*from_c(path));
+  auto r = GetBounds(*from_c(path));
   return to_c(new (mem) Rect64(r));
 }
 
 ClipperRectD *clipper_pathd_bounds(void *mem, ClipperPathD *path) {
-  auto r = Bounds(*from_c(path));
+  auto r = GetBounds(*from_c(path));
   return to_c(new (mem) RectD(r));
 }
 
 ClipperRect64 *clipper_paths64_bounds(void *mem, ClipperPaths64 *paths) {
-  auto r = Bounds(*from_c(paths));
+  auto r = GetBounds(*from_c(paths));
   return to_c(new (mem) Rect64(r));
 }
 
 ClipperRectD *clipper_pathsd_bounds(void *mem, ClipperPathsD *paths) {
-  auto r = Bounds(*from_c(paths));
+  auto r = GetBounds(*from_c(paths));
   return to_c(new (mem) RectD(r));
 }
 
@@ -228,16 +229,6 @@ ClipperPathsD *clipper_pathsd_rect_clip_lines(void *mem, ClipperRectD *rect,
 
 ClipperPath64 *clipper_path64(void *mem) { return to_c(new (mem) Path64()); }
 ClipperPathD *clipper_pathd(void *mem) { return to_c(new (mem) PathD()); }
-
-ClipperPath64 *clipper_path64_of_string(void *mem, char *str) {
-  auto p = MakePath(str);
-  return to_c(new (mem) Path64(p));
-}
-
-ClipperPathD *clipper_pathd_of_string(void *mem, char *str) {
-  auto p = MakePathD(str);
-  return to_c(new (mem) PathD(p));
-}
 
 ClipperPath64 *clipper_path64_of_points(void *mem, ClipperPoint64 *pts,
                                         size_t len_pts) {
@@ -466,6 +457,30 @@ ClipperPathD *clipper_pathd_trim_collinear(void *mem, ClipperPathD *path,
   return to_c(new (mem) PathD(p));
 }
 
+ClipperPath64 *clipper_path64_simplify(void *mem, ClipperPath64 *path,
+                                       double epsilon, int is_open_path) {
+  auto p = SimplifyPath(*from_c(path), epsilon, is_open_path);
+  return to_c(new (mem) Path64(p));
+}
+
+ClipperPathD *clipper_pathd_simplify(void *mem, ClipperPathD *path,
+                                     double epsilon, int is_open_path) {
+  auto p = SimplifyPath(*from_c(path), epsilon, is_open_path);
+  return to_c(new (mem) PathD(p));
+}
+
+ClipperPaths64 *clipper_paths64_simplify(void *mem, ClipperPaths64 *paths,
+                                         double epsilon, int is_open_paths) {
+  auto p = SimplifyPaths(*from_c(paths), epsilon, is_open_paths);
+  return to_c(new (mem) Paths64(p));
+}
+
+ClipperPathsD *clipper_pathsd_simplify(void *mem, ClipperPathsD *paths,
+                                       double epsilon, int is_open_paths) {
+  auto p = SimplifyPaths(*from_c(paths), epsilon, is_open_paths);
+  return to_c(new (mem) PathsD(p));
+}
+
 ClipperPath64 *clipper_path64_ramer_douglas_peucker(void *mem,
                                                     ClipperPath64 *path,
                                                     double epsilon) {
@@ -562,6 +577,7 @@ size_t clipper_polytree64_size() { return sizeof(PolyTree64); }
 size_t clipper_polytreed_size() { return sizeof(PolyTreeD); }
 size_t clipper_clipper64_size() { return sizeof(Clipper64); }
 size_t clipper_clipperd_size() { return sizeof(ClipperD); }
+size_t clipper_clipperoffset_size() { return sizeof(ClipperOffset); }
 
 // destruction
 
@@ -581,6 +597,9 @@ void clipper_destruct_clipper64(ClipperClipper64 *p) {
   from_c(p)->~Clipper64();
 }
 void clipper_destruct_clipperd(ClipperClipperD *p) { from_c(p)->~ClipperD(); }
+void clipper_destruct_clipperoffset(ClipperClipperOffset *p) {
+  from_c(p)->~ClipperOffset();
+}
 
 // pointer free + destruction
 
@@ -594,6 +613,7 @@ void clipper_delete_polytree64(ClipperPolyTree64 *p) { delete from_c(p); }
 void clipper_delete_polytreed(ClipperPolyTreeD *p) { delete from_c(p); }
 void clipper_delete_clipper64(ClipperClipper64 *p) { delete from_c(p); }
 void clipper_delete_clipperd(ClipperClipperD *p) { delete from_c(p); }
+void clipper_delete_clipperoffset(ClipperClipperOffset *p) { delete from_c(p); }
 
 #ifdef __cplusplus
 }
