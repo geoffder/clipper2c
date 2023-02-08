@@ -445,6 +445,38 @@ ClipperPathsD *clipper_pathsd_translate(void *mem, ClipperPathsD *paths,
   return to_c(new (mem) PathsD(p));
 }
 
+ClipperPath64 *clipper_path64_scale(void *mem, ClipperPath64 *path, double sx,
+                                    double sy, int *error_code) {
+  int err = 0;
+  auto p = ScalePath<int64_t, int64_t>(*from_c(path), sx, sy, err);
+  *error_code = err;
+  return to_c(new (mem) Path64(p));
+}
+
+ClipperPathD *clipper_pathd_scale(void *mem, ClipperPathD *path, double sx,
+                                  double sy, int *error_code) {
+  int err = 0;
+  auto p = ScalePath<double, double>(*from_c(path), sx, sy, err);
+  *error_code = err;
+  return to_c(new (mem) PathD(p));
+}
+
+ClipperPaths64 *clipper_paths64_scale(void *mem, ClipperPaths64 *paths,
+                                      double sx, double sy, int *error_code) {
+  int err = 0;
+  auto p = ScalePaths<int64_t, int64_t>(*from_c(paths), sx, sy, err);
+  *error_code = err;
+  return to_c(new (mem) Paths64(p));
+}
+
+ClipperPathsD *clipper_pathsd_scale(void *mem, ClipperPathsD *paths, double sx,
+                                    double sy, int *error_code) {
+  int err = 0;
+  auto p = ScalePaths<double, double>(*from_c(paths), sx, sy, err);
+  *error_code = err;
+  return to_c(new (mem) PathsD(p));
+}
+
 ClipperPath64 *clipper_path64_trim_collinear(void *mem, ClipperPath64 *path,
                                              int is_open_path) {
   auto p = TrimCollinear(*from_c(path), is_open_path);
@@ -581,6 +613,42 @@ ClipperPaths64 *clipper_pathsd_to_paths64(void *mem, ClipperPathsD *paths) {
 
 ClipperPathsD *clipper_paths64_to_pathsd(void *mem, ClipperPaths64 *paths) {
   auto p = Paths64ToPathsD(*from_c(paths));
+  return to_c(new (mem) PathsD(p));
+}
+
+ClipperPath64 *clipper_scale_pathd_to_path64(void *mem, ClipperPathD *path,
+                                             double sx, double sy,
+                                             int *error_code) {
+  int err = 0;
+  auto p = ScalePath<int64_t, double>(*from_c(path), sx, sy, err);
+  *error_code = err;
+  return to_c(new (mem) Path64(p));
+}
+
+ClipperPathD *clipper_scale_path64_to_pathd(void *mem, ClipperPath64 *path,
+                                            double sx, double sy,
+                                            int *error_code) {
+  int err = 0;
+  auto p = ScalePath<double, int64_t>(*from_c(path), sx, sy, err);
+  *error_code = err;
+  return to_c(new (mem) PathD(p));
+}
+
+ClipperPaths64 *clipper_scale_pathsd_to_paths64(void *mem, ClipperPathsD *paths,
+                                                double sx, double sy,
+                                                int *error_code) {
+  int err = 0;
+  auto p = ScalePaths<int64_t, double>(*from_c(paths), sx, sy, err);
+  *error_code = err;
+  return to_c(new (mem) Paths64(p));
+}
+
+ClipperPathsD *clipper_scale_paths64_to_pathsd(void *mem, ClipperPaths64 *paths,
+                                               double sx, double sy,
+                                               int *error_code) {
+  int err = 0;
+  auto p = ScalePaths<double, int64_t>(*from_c(paths), sx, sy, err);
+  *error_code = err;
   return to_c(new (mem) PathsD(p));
 }
 
