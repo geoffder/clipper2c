@@ -1,5 +1,6 @@
 #include <clipper2/clipper.h>
 
+#include "clipper2/clipper.core.h"
 #include "conv.h"
 #include "types.h"
 #include <clipper2c.h>
@@ -47,8 +48,14 @@ int clipper_rect64_contains_rect(ClipperRect64 *a, ClipperRect64 *b) {
   return from_c(a)->Contains(*from_c(b));
 }
 
-void clipper_rect64_scale(ClipperRect64 *r, double scale) {
+void clipper_rect64_scale_mut(ClipperRect64 *r, double scale) {
   from_c(r)->Scale(scale);
+}
+
+ClipperRect64 *clipper_rect64_scale(void *mem, ClipperRect64 *r, double scale) {
+  auto scaled = new (mem) Rect64(*from_c(r));
+  from_c(r)->Scale(scale);
+  return to_c(scaled);
 }
 
 int clipper_rect64_is_empty(ClipperRect64 *r) { return from_c(r)->IsEmpty(); }
@@ -81,8 +88,14 @@ int clipper_rectd_contains_rect(ClipperRectD *a, ClipperRectD *b) {
   return from_c(a)->Contains(*from_c(b));
 }
 
-void clipper_rectd_scale(ClipperRectD *r, double scale) {
+void clipper_rectd_scale_mut(ClipperRectD *r, double scale) {
   from_c(r)->Scale(scale);
+}
+
+ClipperRectD *clipper_rectd_scale(void *mem, ClipperRectD *r, double scale) {
+  auto scaled = new (mem) RectD(*from_c(r));
+  from_c(r)->Scale(scale);
+  return to_c(scaled);
 }
 
 int clipper_rectd_is_empty(ClipperRectD *r) { return from_c(r)->IsEmpty(); }
