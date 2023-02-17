@@ -199,14 +199,15 @@ ClipperPathsD *clipper_pathsd_rect_clip(void *mem, ClipperRectD *rect,
   return to_c(new (mem) PathsD(p));
 }
 
-ClipperPaths64 *clipper_path64_rect_clip_line(void *mem, ClipperRect64 *rect,
-                                              ClipperPath64 *path) {
+ClipperPaths64 *clipper_paths64_rect_clip_line(void *mem, ClipperRect64 *rect,
+                                               ClipperPath64 *path) {
   auto p = RectClipLines(*from_c(rect), *from_c(path));
   return to_c(new (mem) Paths64(p));
 }
 
-ClipperPathsD *clipper_pathd_rect_clip_line(void *mem, ClipperRectD *rect,
-                                            ClipperPathD *path, int precision) {
+ClipperPathsD *clipper_pathsd_rect_clip_line(void *mem, ClipperRectD *rect,
+                                             ClipperPathD *path,
+                                             int precision) {
   auto p = RectClipLines(*from_c(rect), *from_c(path), precision);
   return to_c(new (mem) PathsD(p));
 }
