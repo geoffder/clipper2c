@@ -68,10 +68,10 @@ ClipperRect64 *clipper_path64_bounds(void *mem, ClipperPath64 *path);
 ClipperRectD *clipper_pathd_bounds(void *mem, ClipperPathD *path);
 ClipperRect64 *clipper_paths64_bounds(void *mem, ClipperPaths64 *paths);
 ClipperRectD *clipper_pathsd_bounds(void *mem, ClipperPathsD *paths);
-ClipperPath64 *clipper_path64_rect_clip(void *mem, ClipperRect64 *rect,
-                                        ClipperPath64 *path);
-ClipperPathD *clipper_pathd_rect_clip(void *mem, ClipperRectD *rect,
-                                      ClipperPathD *path, int precision);
+ClipperPaths64 *clipper_path64_rect_clip(void *mem, ClipperRect64 *rect,
+                                         ClipperPath64 *path);
+ClipperPathsD *clipper_pathd_rect_clip(void *mem, ClipperRectD *rect,
+                                       ClipperPathD *path, int precision);
 ClipperPaths64 *clipper_paths64_rect_clip(void *mem, ClipperRect64 *rect,
                                           ClipperPaths64 *paths);
 ClipperPathsD *clipper_pathsd_rect_clip(void *mem, ClipperRectD *rect,
