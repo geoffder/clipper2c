@@ -112,6 +112,8 @@ ClipperPathsD *clipper_pathsd_of_paths(void *mem, ClipperPathD **paths,
                                        size_t len_paths);
 void clipper_paths64_add_path(ClipperPaths64 *paths, ClipperPath64 *p);
 void clipper_pathsd_add_path(ClipperPathsD *paths, ClipperPathD *p);
+void clipper_paths64_add_paths(ClipperPaths64 *a, ClipperPaths64 *b);
+void clipper_pathsd_add_paths(ClipperPathsD *a, ClipperPathsD *b);
 
 // Path Conversions (to C)
 
@@ -234,6 +236,23 @@ ClipperPaths64 *clipper_path64_minkowski_diff(void *mem, ClipperPath64 *pattern,
 ClipperPathsD *clipper_pathd_minkowski_diff(void *mem, ClipperPathD *pattern,
                                             ClipperPathD *path, int is_closed,
                                             int precision);
+ClipperPaths64 *clipper_paths64_minkowski_sum(void *mem, ClipperPath64 *pattern,
+                                              ClipperPaths64 *paths,
+                                              int is_closed,
+                                              ClipperFillRule fillrule);
+ClipperPathsD *clipper_pathsd_minkowski_sum(void *mem, ClipperPathD *pattern,
+                                            ClipperPathsD *paths, int is_closed,
+                                            int precision,
+                                            ClipperFillRule fillrule);
+ClipperPaths64 *clipper_paths64_minkowski_diff(void *mem,
+                                               ClipperPath64 *pattern,
+                                               ClipperPaths64 *paths,
+                                               int is_closed,
+                                               ClipperFillRule fillrule);
+ClipperPathsD *clipper_pathsd_minkowski_diff(void *mem, ClipperPathD *pattern,
+                                             ClipperPathsD *paths,
+                                             int is_closed, int precision,
+                                             ClipperFillRule fillrule);
 
 // Geometry
 

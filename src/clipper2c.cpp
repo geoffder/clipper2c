@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cstdint>
 
+#include "clipper2/clipper.minkowski.h"
 #include "clipper2/clipper.offset.h"
 #include "conv.h"
 #include "types.h"
@@ -296,6 +297,14 @@ void clipper_paths64_add_path(ClipperPaths64 *paths, ClipperPath64 *p) {
 
 void clipper_pathsd_add_path(ClipperPathsD *paths, ClipperPathD *p) {
   from_c(paths)->push_back(*from_c(p));
+}
+
+void clipper_paths64_add_paths(ClipperPaths64 *a, ClipperPaths64 *b) {
+  from_c(a)->insert(from_c(a)->end(), from_c(b)->begin(), from_c(b)->end());
+}
+
+void clipper_pathsd_add_paths(ClipperPathsD *a, ClipperPathsD *b) {
+  from_c(a)->insert(from_c(a)->end(), from_c(b)->begin(), from_c(b)->end());
 }
 
 // Path Conversions (to C)
@@ -680,6 +689,71 @@ ClipperPathsD *clipper_pathd_minkowski_diff(void *mem, ClipperPathD *pattern,
   auto ps =
       MinkowskiDiff(*from_c(pattern), *from_c(path), is_closed, precision);
   return to_c(new (mem) PathsD(ps));
+}
+
+ClipperPaths64 *clipper_paths64_minkowski_sum(void *mem, ClipperPath64 *pattern,
+                                              ClipperPaths64 *paths,
+                                              int is_closed,
+                                              ClipperFillRule fillrule) {
+  auto ps = *from_c(paths);
+  auto pat = *from_c(pattern);
+  auto len = ps.size();
+  auto summed = Paths64();
+  for (auto p : ps) {
+    auto ss = MinkowskiSum(pat, p, is_closed);
+    summed.insert(summed.end(), ss.begin(), ss.end());
+  }
+  auto u = Union(summed, from_c(fillrule));
+  return to_c(new (mem) Paths64(u));
+}
+
+ClipperPaths64 *clipper_paths64_minkowski_diff(void *mem,
+                                               ClipperPath64 *pattern,
+                                               ClipperPaths64 *paths,
+                                               int is_closed,
+                                               ClipperFillRule fillrule) {
+  auto ps = *from_c(paths);
+  auto pat = *from_c(pattern);
+  auto len = ps.size();
+  auto diffed = Paths64();
+  for (auto p : ps) {
+    auto ds = MinkowskiDiff(pat, p, is_closed);
+    diffed.insert(diffed.end(), ds.begin(), ds.end());
+  }
+  auto u = Union(diffed, from_c(fillrule));
+  return to_c(new (mem) Paths64(u));
+}
+
+ClipperPathsD *clipper_pathsd_minkowski_sum(void *mem, ClipperPathD *pattern,
+                                            ClipperPathsD *paths, int is_closed,
+                                            int precision,
+                                            ClipperFillRule fillrule) {
+  auto ps = *from_c(paths);
+  auto pat = *from_c(pattern);
+  auto len = ps.size();
+  auto summed = PathsD();
+  for (auto p : ps) {
+    auto ss = MinkowskiSum(pat, p, is_closed, precision);
+    summed.insert(summed.end(), ss.begin(), ss.end());
+  }
+  auto u = Union(summed, from_c(fillrule));
+  return to_c(new (mem) PathsD(u));
+}
+
+ClipperPathsD *clipper_pathsd_minkowski_diff(void *mem, ClipperPathD *pattern,
+                                             ClipperPathsD *paths,
+                                             int is_closed, int precision,
+                                             ClipperFillRule fillrule) {
+  auto ps = *from_c(paths);
+  auto pat = *from_c(pattern);
+  auto len = ps.size();
+  auto diffed = PathsD();
+  for (auto p : ps) {
+    auto ds = MinkowskiDiff(pat, p, is_closed, precision);
+    diffed.insert(diffed.end(), ds.begin(), ds.end());
+  }
+  auto u = Union(diffed, from_c(fillrule));
+  return to_c(new (mem) PathsD(u));
 }
 
 // Geometry
