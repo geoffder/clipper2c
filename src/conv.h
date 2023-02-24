@@ -1,5 +1,6 @@
 #pragma once
 #include "types.h"
+#include <clipper.svg.h>
 #include <clipper2/clipper.h>
 
 ClipperPoint64 to_c(Clipper2Lib::Point64 p);
@@ -15,6 +16,8 @@ ClipperPolyTreeD *to_c(Clipper2Lib::PolyTreeD *p);
 ClipperClipper64 *to_c(Clipper2Lib::Clipper64 *p);
 ClipperClipperD *to_c(Clipper2Lib::ClipperD *p);
 ClipperClipperOffset *to_c(Clipper2Lib::ClipperOffset *p);
+ClipperSvgWriter *to_c(Clipper2Lib::SvgWriter *w);
+ClipperSvgReader *to_c(Clipper2Lib::SvgReader *w);
 ClipperClipType to_c(Clipper2Lib::ClipType cliptype);
 ClipperFillRule to_c(Clipper2Lib::FillRule fillrule);
 ClipperJoinType to_c(Clipper2Lib::JoinType jointype);
@@ -34,6 +37,8 @@ Clipper2Lib::PolyTreeD *from_c(ClipperPolyTreeD *p);
 Clipper2Lib::Clipper64 *from_c(ClipperClipper64 *p);
 Clipper2Lib::ClipperD *from_c(ClipperClipperD *p);
 Clipper2Lib::ClipperOffset *from_c(ClipperClipperOffset *p);
+Clipper2Lib::SvgWriter *from_c(ClipperSvgWriter *w);
+Clipper2Lib::SvgReader *from_c(ClipperSvgReader *w);
 Clipper2Lib::ClipType from_c(ClipperClipType ct);
 Clipper2Lib::FillRule from_c(ClipperFillRule fr);
 Clipper2Lib::JoinType from_c(ClipperJoinType jt);

@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <stddef.h>
 #include <stdint.h>
 #include <types.h>
@@ -443,6 +444,43 @@ void clipper_clipperoffset_add_paths64(ClipperClipperOffset *c,
                                        ClipperEndType et);
 ClipperPaths64 *
 clipper_clipperoffset_execute(void *mem, ClipperClipperOffset *c, double delta);
+
+// SvgWriter
+
+ClipperSvgWriter *clipper_svgwriter(void *mem, int precision);
+ClipperFillRule clipper_svgwriter_fill_rule(ClipperSvgWriter *w);
+void clipper_svgwriter_set_coords_style(ClipperSvgWriter *w,
+                                        const char *font_name,
+                                        uint32_t font_color,
+                                        uint32_t font_size);
+void clipper_svgwriter_add_text(ClipperSvgWriter *w, const char *text,
+                                uint32_t font_color, uint32_t font_size, int x,
+                                int y);
+void clipper_svgwriter_add_path64(ClipperSvgWriter *w, ClipperPath64 *path,
+                                  int is_open, ClipperFillRule fillrule,
+                                  uint32_t brush_color, uint32_t pen_color,
+                                  double pen_width, int show_coords);
+void clipper_svgwriter_add_pathd(ClipperSvgWriter *w, ClipperPathD *path,
+                                 int is_open, ClipperFillRule fillrule,
+                                 uint32_t brush_color, uint32_t pen_color,
+                                 double pen_width, int show_coords);
+void clipper_svgwriter_add_paths64(ClipperSvgWriter *w, ClipperPaths64 *paths,
+                                   int is_open, ClipperFillRule fillrule,
+                                   uint32_t brush_color, uint32_t pen_color,
+                                   double pen_width, int show_coords);
+void clipper_svgwriter_add_pathsd(ClipperSvgWriter *w, ClipperPathsD *paths,
+                                  int is_open, ClipperFillRule fillrule,
+                                  uint32_t brush_color, uint32_t pen_color,
+                                  double pen_width, int show_coords);
+void clipper_svgwriter_clear(ClipperSvgWriter *w);
+
+// SvgReader
+
+ClipperSvgReader *clipper_svgreader(void *mem);
+void clipper_svgreader_load_from_file(ClipperSvgReader *r,
+                                      const char *filename);
+void clipper_svgreader_clear(ClipperSvgReader *r);
+ClipperPathsD *clipper_svgreader_get_pathsd(void *mem, ClipperSvgReader *r);
 
 // memory size
 

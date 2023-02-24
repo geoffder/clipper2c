@@ -50,6 +50,14 @@ ClipperClipperOffset *to_c(Clipper2Lib::ClipperOffset *p) {
   return reinterpret_cast<ClipperClipperOffset *>(p);
 }
 
+ClipperSvgWriter *to_c(Clipper2Lib::SvgWriter *p) {
+  return reinterpret_cast<ClipperSvgWriter *>(p);
+}
+
+ClipperSvgReader *to_c(Clipper2Lib::SvgReader *p) {
+  return reinterpret_cast<ClipperSvgReader *>(p);
+}
+
 ClipperClipType to_c(Clipper2Lib::ClipType cliptype) {
   ClipperClipType ct = NONE;
   switch (cliptype) {
@@ -190,6 +198,14 @@ Clipper2Lib::ClipperD *from_c(ClipperClipperD *p) {
 
 Clipper2Lib::ClipperOffset *from_c(ClipperClipperOffset *p) {
   return reinterpret_cast<Clipper2Lib::ClipperOffset *>(p);
+}
+
+Clipper2Lib::SvgWriter *from_c(ClipperSvgWriter *p) {
+  return reinterpret_cast<Clipper2Lib::SvgWriter *>(p);
+}
+
+Clipper2Lib::SvgReader *from_c(ClipperSvgReader *p) {
+  return reinterpret_cast<Clipper2Lib::SvgReader *>(p);
 }
 
 Clipper2Lib::ClipType from_c(ClipperClipType fr) {

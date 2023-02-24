@@ -16,7 +16,7 @@ add_library(clipper2c ${SOURCE_FILES})
 
 target_link_libraries(
   clipper2c
-  PRIVATE Clipper2
+  PRIVATE Clipper2 Clipper2utils
 )
 
 target_include_directories(clipper2c PUBLIC ${PROJECT_SOURCE_DIR}/include)
