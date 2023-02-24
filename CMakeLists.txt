@@ -10,13 +10,37 @@ add_compile_options(-fPIC)
 
 add_subdirectory(vendor/Clipper2/CPP)
 
+# Build svg from utils without forced static linking (altered from Clipper2 CMakeLists.txt)
+
+set(CLIPPER2_SVG_INC
+  vendor/Clipper2/CPP/Utils/clipper.svg.h
+)
+
+set(CLIPPER2_SVG_SRC
+ vendor/Clipper2/CPP/Utils/clipper.svg.cpp
+)
+
+add_library(Clipper2svg ${CLIPPER2_SVG_INC} ${CLIPPER2_SVG_SRC})
+target_link_libraries(Clipper2svg PUBLIC Clipper2)
+
+add_library(Clipper2Zsvg ${CLIPPER2_SVG_INC} ${CLIPPER2_SVG_SRC})
+target_link_libraries(Clipper2Zsvg PUBLIC Clipper2Z)
+
+set_target_properties(Clipper2svg Clipper2Zsvg PROPERTIES FOLDER Libraries)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  target_compile_options(Clipper2svg PRIVATE -Wno-unused-variable -Wno-unused-function)
+  target_compile_options(Clipper2Zsvg PRIVATE -Wno-unused-variable -Wno-unused-function)
+endif()
+
+# C Bindings
+
 file(GLOB_RECURSE SOURCE_FILES  src/*.cpp)
 
 add_library(clipper2c ${SOURCE_FILES})
 
 target_link_libraries(
   clipper2c
-  PRIVATE Clipper2 Clipper2utils
+  PRIVATE Clipper2 Clipper2svg
 )
 
 target_include_directories(clipper2c PUBLIC ${PROJECT_SOURCE_DIR}/include)

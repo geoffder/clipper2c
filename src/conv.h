@@ -1,6 +1,6 @@
 #pragma once
 #include "types.h"
-#include <clipper.svg.h>
+#include <../vendor/Clipper2/CPP/Utils/clipper.svg.h>
 #include <clipper2/clipper.h>
 
 ClipperPoint64 to_c(Clipper2Lib::Point64 p);
