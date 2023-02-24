@@ -1,7 +1,5 @@
 #include "clipper2/clipper.core.h"
 #include <clipper2/clipper.h>
-#include <cmath>
-#include <cstdint>
 
 #include "clipper2/clipper.minkowski.h"
 #include "clipper2/clipper.offset.h"
