@@ -825,6 +825,8 @@ size_t clipper_polytreed_size() { return sizeof(PolyTreeD); }
 size_t clipper_clipper64_size() { return sizeof(Clipper64); }
 size_t clipper_clipperd_size() { return sizeof(ClipperD); }
 size_t clipper_clipperoffset_size() { return sizeof(ClipperOffset); }
+size_t clipper_svgwriter_size() { return sizeof(SvgWriter); }
+size_t clipper_svgreader_size() { return sizeof(SvgReader); }
 
 // destruction
 
@@ -847,6 +849,12 @@ void clipper_destruct_clipperd(ClipperClipperD *p) { from_c(p)->~ClipperD(); }
 void clipper_destruct_clipperoffset(ClipperClipperOffset *p) {
   from_c(p)->~ClipperOffset();
 }
+void clipper_destruct_svgwriter(ClipperSvgWriter *p) {
+  from_c(p)->~SvgWriter();
+}
+void clipper_destruct_svgreader(ClipperSvgReader *p) {
+  from_c(p)->~SvgReader();
+}
 
 // pointer free + destruction
 
@@ -861,6 +869,8 @@ void clipper_delete_polytreed(ClipperPolyTreeD *p) { delete from_c(p); }
 void clipper_delete_clipper64(ClipperClipper64 *p) { delete from_c(p); }
 void clipper_delete_clipperd(ClipperClipperD *p) { delete from_c(p); }
 void clipper_delete_clipperoffset(ClipperClipperOffset *p) { delete from_c(p); }
+void clipper_delete_svgwriter(ClipperSvgWriter *p) { delete from_c(p); }
+void clipper_delete_svgreader(ClipperSvgReader *p) { delete from_c(p); }
 
 #ifdef __cplusplus
 }
