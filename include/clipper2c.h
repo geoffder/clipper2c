@@ -471,6 +471,8 @@ void clipper_svgwriter_add_pathsd(ClipperSvgWriter *w, ClipperPathsD *paths,
                                   int is_open, ClipperFillRule fillrule,
                                   uint32_t brush_color, uint32_t pen_color,
                                   double pen_width, int show_coords);
+int clipper_svgwriter_save_to_file(ClipperSvgWriter *w, const char *filename,
+                                   int max_width, int max_height, int margin);
 void clipper_svgwriter_clear(ClipperSvgWriter *w);
 
 // SvgReader
