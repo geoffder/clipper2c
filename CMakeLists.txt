@@ -4,8 +4,11 @@ project(clipper2c LANGUAGES CXX)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-option(BUILD_SHARED_LIBS OFF)
+set(CLIPPER2_UTILS OFF)
+set(CLIPPER2_EXAMPLES OFF)
+set(CLIPPER2_TESTS OFF)
 
+option(BUILD_SHARED_LIBS OFF)
 add_compile_options(-fPIC)
 
 add_subdirectory(vendor/Clipper2/CPP)
@@ -23,13 +26,9 @@ set(CLIPPER2_SVG_SRC
 add_library(Clipper2svg ${CLIPPER2_SVG_INC} ${CLIPPER2_SVG_SRC})
 target_link_libraries(Clipper2svg PUBLIC Clipper2)
 
-add_library(Clipper2Zsvg ${CLIPPER2_SVG_INC} ${CLIPPER2_SVG_SRC})
-target_link_libraries(Clipper2Zsvg PUBLIC Clipper2Z)
-
-set_target_properties(Clipper2svg Clipper2Zsvg PROPERTIES FOLDER Libraries)
+set_target_properties(Clipper2svg PROPERTIES FOLDER Libraries)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_compile_options(Clipper2svg PRIVATE -Wno-unused-variable -Wno-unused-function)
-  target_compile_options(Clipper2Zsvg PRIVATE -Wno-unused-variable -Wno-unused-function)
 endif()
 
 # C Bindings
