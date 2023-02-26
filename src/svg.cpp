@@ -3,6 +3,8 @@
 #include "conv.h"
 #include "types.h"
 #include <clipper2c.h>
+#include <clocale>
+#include <locale.h>
 #include <stdint.h>
 
 using namespace Clipper2Lib;
@@ -69,7 +71,8 @@ void clipper_svgwriter_add_pathsd(ClipperSvgWriter *w, ClipperPathsD *paths,
 
 int clipper_svgwriter_save_to_file(ClipperSvgWriter *w, const char *filename,
                                    int max_width, int max_height, int margin) {
-  from_c(w)->SaveToFile(std::string(filename), max_width, max_height, margin);
+  return from_c(w)->SaveToFile(std::string(filename), max_width, max_height,
+                               margin);
 }
 
 void clipper_svgwriter_clear(ClipperSvgWriter *w) { from_c(w)->Clear(); }
