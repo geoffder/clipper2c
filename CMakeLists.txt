@@ -7,8 +7,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CLIPPER2_UTILS OFF)
 set(CLIPPER2_EXAMPLES OFF)
 set(CLIPPER2_TESTS OFF)
-# disable exceptions
-add_definitions(-D_HAS_EXCEPTIONS=0) # for STL
+add_definitions(-D_HAS_EXCEPTIONS=0) # disable exceptions for STL
 
 option(BUILD_SHARED_LIBS OFF)
 add_compile_options(-fPIC)

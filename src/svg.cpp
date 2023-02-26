@@ -3,8 +3,6 @@
 #include "conv.h"
 #include "types.h"
 #include <clipper2c.h>
-#include <clocale>
-#include <locale.h>
 #include <stdint.h>
 
 using namespace Clipper2Lib;
