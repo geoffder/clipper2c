@@ -206,9 +206,9 @@ ClipperPathsD *clipper_pathsd_strip_duplicates(void *mem, ClipperPathsD *paths,
 // Path Conversions
 
 ClipperPathD *clipper_path64_to_pathd(void *mem, ClipperPath64 *path);
-ClipperPath64 *clipper_pathd_to_pathd(void *mem, ClipperPathD *path);
+ClipperPath64 *clipper_pathd_to_path64(void *mem, ClipperPathD *path);
 ClipperPathsD *clipper_paths64_to_pathsd(void *mem, ClipperPaths64 *paths);
-ClipperPaths64 *clipper_pathsd_to_pathsd(void *mem, ClipperPathsD *paths);
+ClipperPaths64 *clipper_pathsd_to_paths64(void *mem, ClipperPathsD *paths);
 ClipperPathD *clipper_scale_path64_to_pathd(void *mem, ClipperPath64 *path,
                                             double sx, double sy,
                                             int *error_code);
