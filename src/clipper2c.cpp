@@ -231,6 +231,7 @@ ClipperPathD *clipper_pathd(void *mem) { return to_c(new (mem) PathD()); }
 ClipperPath64 *clipper_path64_of_points(void *mem, ClipperPoint64 *pts,
                                         size_t len_pts) {
   auto path = new (mem) Path64();
+  path->reserve(len_pts);
   for (int i = 0; i < len_pts; ++i) {
     path->push_back(Point64(pts[i].x, pts[i].y));
   }
@@ -240,6 +241,7 @@ ClipperPath64 *clipper_path64_of_points(void *mem, ClipperPoint64 *pts,
 ClipperPathD *clipper_pathd_of_points(void *mem, ClipperPointD *pts,
                                       size_t len_pts) {
   auto path = new (mem) PathD();
+  path->reserve(len_pts);
   for (int i = 0; i < len_pts; ++i) {
     path->push_back(PointD(pts[i].x, pts[i].y));
   }
