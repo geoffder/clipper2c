@@ -97,6 +97,8 @@ ClipperPathD *clipper_pathd_of_points(void *mem, ClipperPointD *pts,
                                       size_t len_pts);
 void clipper_path64_add_point(ClipperPath64 *path, ClipperPoint64 pt);
 void clipper_pathd_add_point(ClipperPathD *path, ClipperPointD pt);
+void clipper_pathd_reserve(ClipperPathD *path, size_t size);
+void clipper_path64_reserve(ClipperPath64 *path, size_t size);
 ClipperPath64 *clipper_path64_ellipse(void *mem, ClipperPoint64 center,
                                       double radius_x, double radius_y,
                                       int steps);
@@ -114,6 +116,8 @@ void clipper_paths64_add_path(ClipperPaths64 *paths, ClipperPath64 *p);
 void clipper_pathsd_add_path(ClipperPathsD *paths, ClipperPathD *p);
 void clipper_paths64_add_paths(ClipperPaths64 *a, ClipperPaths64 *b);
 void clipper_pathsd_add_paths(ClipperPathsD *a, ClipperPathsD *b);
+void clipper_pathsd_reserve(ClipperPathsD *paths, size_t size);
+void clipper_paths64_reserve(ClipperPaths64 *paths, size_t size);
 
 // Path Conversions (to C)
 

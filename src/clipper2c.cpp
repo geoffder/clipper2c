@@ -256,6 +256,22 @@ void clipper_pathd_add_point(ClipperPathD *path, ClipperPointD pt) {
   from_c(path)->push_back(from_c(pt));
 }
 
+void clipper_pathd_reserve(ClipperPathD *path, size_t size) {
+  from_c(path)->reserve(size);
+}
+
+void clipper_path64_reserve(ClipperPath64 *path, size_t size) {
+  from_c(path)->reserve(size);
+}
+
+void clipper_pathsd_reserve(ClipperPathsD *paths, size_t size) {
+  from_c(paths)->reserve(size);
+}
+
+void clipper_paths64_reserve(ClipperPaths64 *paths, size_t size) {
+  from_c(paths)->reserve(size);
+}
+
 ClipperPath64 *clipper_path64_ellipse(void *mem, ClipperPoint64 center,
                                       double radius_x, double radius_y,
                                       int steps) {
