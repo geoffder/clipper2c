@@ -276,6 +276,7 @@ ClipperPathsD *clipper_pathsd(void *mem) { return to_c(new (mem) PathsD()); }
 ClipperPaths64 *clipper_paths64_of_paths(void *mem, ClipperPath64 **paths,
                                          size_t len_paths) {
   auto ps = new (mem) Paths64();
+  ps->reserve(len_paths);
   for (int i = 0; i < len_paths; ++i) {
     ps->push_back(*from_c(paths[i]));
   }
@@ -285,6 +286,7 @@ ClipperPaths64 *clipper_paths64_of_paths(void *mem, ClipperPath64 **paths,
 ClipperPathsD *clipper_pathsd_of_paths(void *mem, ClipperPathD **paths,
                                        size_t len_paths) {
   auto ps = new (mem) PathsD();
+  ps->reserve(len_paths);
   for (int i = 0; i < len_paths; ++i) {
     ps->push_back(*from_c(paths[i]));
   }
