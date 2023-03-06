@@ -89,8 +89,6 @@ ClipperPathsD *clipper_pathsd_rect_clip_lines(void *mem, ClipperRectD *rect,
 
 ClipperPath64 *clipper_path64(void *mem);
 ClipperPathD *clipper_pathd(void *mem);
-ClipperPath64 *clipper_path64_of_string(void *mem, char *str);
-ClipperPathD *clipper_pathd_of_string(void *mem, char *str);
 ClipperPath64 *clipper_path64_of_points(void *mem, ClipperPoint64 *pts,
                                         size_t len_pts);
 ClipperPathD *clipper_pathd_of_points(void *mem, ClipperPointD *pts,
