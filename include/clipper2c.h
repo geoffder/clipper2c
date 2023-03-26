@@ -434,10 +434,6 @@ void clipper_clipperoffset_clear(ClipperClipperOffset *c);
 
 // ClipperOffset Methods
 
-void clipper_clipperoffset_add_pathd(ClipperClipperOffset *c, ClipperPathD *p,
-                                     ClipperJoinType jt, ClipperEndType et);
-void clipper_clipperoffset_add_pathsd(ClipperClipperOffset *c, ClipperPathsD *p,
-                                      ClipperJoinType jt, ClipperEndType et);
 void clipper_clipperoffset_add_path64(ClipperClipperOffset *c, ClipperPath64 *p,
                                       ClipperJoinType jt, ClipperEndType et);
 void clipper_clipperoffset_add_paths64(ClipperClipperOffset *c,
