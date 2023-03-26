@@ -7,6 +7,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CLIPPER2_UTILS OFF)
 set(CLIPPER2_EXAMPLES OFF)
 set(CLIPPER2_TESTS OFF)
+set(CLIPPER2_USINGZ "OFF" CACHE STRING "Preempt cache default of USINGZ (only binding 2d)")
 add_definitions(-D_HAS_EXCEPTIONS=0) # disable exceptions for STL
 
 option(BUILD_SHARED_LIBS OFF)
