@@ -195,15 +195,11 @@ ClipperPaths64 *clipper_paths64_strip_near_equal(void *mem,
 ClipperPathsD *clipper_pathsd_strip_near_equal(void *mem, ClipperPathsD *paths,
                                                double max_dist_sqrd,
                                                int is_closed_paths);
-ClipperPath64 *clipper_path64_strip_duplicates(void *mem, ClipperPath64 *path,
-                                               int is_closed_path);
-ClipperPathD *clipper_pathd_strip_duplicates(void *mem, ClipperPathD *path,
-                                             int is_closed_path);
-ClipperPaths64 *clipper_paths64_strip_duplicates(void *mem,
-                                                 ClipperPaths64 *paths,
-                                                 int is_closed_paths);
-ClipperPathsD *clipper_pathsd_strip_duplicates(void *mem, ClipperPathsD *paths,
-                                               int is_closed_paths);
+void clipper_path64_strip_duplicates(ClipperPath64 *path, int is_closed_path);
+void clipper_pathd_strip_duplicates(ClipperPathD *path, int is_closed_path);
+void clipper_paths64_strip_duplicates(ClipperPaths64 *paths,
+                                      int is_closed_paths);
+void clipper_pathsd_strip_duplicates(ClipperPathsD *paths, int is_closed_paths);
 
 // Path Conversions
 

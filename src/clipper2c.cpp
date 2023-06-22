@@ -176,50 +176,50 @@ ClipperRectD *clipper_pathsd_bounds(void *mem, ClipperPathsD *paths) {
 
 ClipperPaths64 *clipper_path64_rect_clip(void *mem, ClipperRect64 *rect,
                                          ClipperPath64 *path) {
-  auto p = ExecuteRectClip(*from_c(rect), *from_c(path));
+  auto p = RectClip(*from_c(rect), *from_c(path));
   return to_c(new (mem) Paths64(p));
 }
 
 ClipperPathsD *clipper_pathd_rect_clip(void *mem, ClipperRectD *rect,
                                        ClipperPathD *path, int precision) {
-  auto p = ExecuteRectClip(*from_c(rect), *from_c(path), precision);
+  auto p = RectClip(*from_c(rect), *from_c(path), precision);
   return to_c(new (mem) PathsD(p));
 }
 
 ClipperPaths64 *clipper_paths64_rect_clip(void *mem, ClipperRect64 *rect,
                                           ClipperPaths64 *paths) {
-  auto p = ExecuteRectClip(*from_c(rect), *from_c(paths));
+  auto p = RectClip(*from_c(rect), *from_c(paths));
   return to_c(new (mem) Paths64(p));
 }
 
 ClipperPathsD *clipper_pathsd_rect_clip(void *mem, ClipperRectD *rect,
                                         ClipperPathsD *paths, int precision) {
-  auto p = ExecuteRectClip(*from_c(rect), *from_c(paths), precision);
+  auto p = RectClip(*from_c(rect), *from_c(paths), precision);
   return to_c(new (mem) PathsD(p));
 }
 
 ClipperPaths64 *clipper_path64_rect_clip_line(void *mem, ClipperRect64 *rect,
                                               ClipperPath64 *path) {
-  auto p = ExecuteRectClipLines(*from_c(rect), *from_c(path));
+  auto p = RectClipLines(*from_c(rect), *from_c(path));
   return to_c(new (mem) Paths64(p));
 }
 
 ClipperPathsD *clipper_pathd_rect_clip_line(void *mem, ClipperRectD *rect,
                                             ClipperPathD *path, int precision) {
-  auto p = ExecuteRectClipLines(*from_c(rect), *from_c(path), precision);
+  auto p = RectClipLines(*from_c(rect), *from_c(path), precision);
   return to_c(new (mem) PathsD(p));
 }
 
 ClipperPaths64 *clipper_paths64_rect_clip_lines(void *mem, ClipperRect64 *rect,
                                                 ClipperPaths64 *paths) {
-  auto p = ExecuteRectClipLines(*from_c(rect), *from_c(paths));
+  auto p = RectClipLines(*from_c(rect), *from_c(paths));
   return to_c(new (mem) Paths64(p));
 }
 
 ClipperPathsD *clipper_pathsd_rect_clip_lines(void *mem, ClipperRectD *rect,
                                               ClipperPathsD *paths,
                                               int precision) {
-  auto p = ExecuteRectClipLines(*from_c(rect), *from_c(paths), precision);
+  auto p = RectClipLines(*from_c(rect), *from_c(paths), precision);
   return to_c(new (mem) PathsD(p));
 }
 
@@ -595,29 +595,22 @@ ClipperPathsD *clipper_pathsd_strip_near_equal(void *mem, ClipperPathsD *paths,
   return to_c(new (mem) PathsD(p));
 }
 
-ClipperPath64 *clipper_path64_strip_duplicates(void *mem, ClipperPath64 *path,
-                                               int is_closed_path) {
-  auto p = StripDuplicates(*from_c(path), is_closed_path);
-  return to_c(new (mem) Path64(p));
+void clipper_path64_strip_duplicates(ClipperPath64 *path, int is_closed_path) {
+  StripDuplicates(*from_c(path), is_closed_path);
 }
 
-ClipperPathD *clipper_pathd_strip_duplicates(void *mem, ClipperPathD *path,
-                                             int is_closed_path) {
-  auto p = StripDuplicates(*from_c(path), is_closed_path);
-  return to_c(new (mem) PathD(p));
+void clipper_pathd_strip_duplicates(ClipperPathD *path, int is_closed_path) {
+  StripDuplicates(*from_c(path), is_closed_path);
 }
 
-ClipperPaths64 *clipper_paths64_strip_duplicates(void *mem,
-                                                 ClipperPaths64 *paths,
-                                                 int is_closed_paths) {
-  auto p = StripDuplicates(*from_c(paths), is_closed_paths);
-  return to_c(new (mem) Paths64(p));
+void clipper_paths64_strip_duplicates(ClipperPaths64 *paths,
+                                      int is_closed_paths) {
+  StripDuplicates(*from_c(paths), is_closed_paths);
 }
 
-ClipperPathsD *clipper_pathsd_strip_duplicates(void *mem, ClipperPathsD *paths,
-                                               int is_closed_paths) {
-  auto p = StripDuplicates(*from_c(paths), is_closed_paths);
-  return to_c(new (mem) PathsD(p));
+void clipper_pathsd_strip_duplicates(ClipperPathsD *paths,
+                                     int is_closed_paths) {
+  StripDuplicates(*from_c(paths), is_closed_paths);
 }
 
 // Path Conversions
