@@ -616,22 +616,22 @@ void clipper_pathsd_strip_duplicates(ClipperPathsD *paths,
 // Path Conversions
 
 ClipperPath64 *clipper_pathd_to_path64(void *mem, ClipperPathD *path) {
-  auto p = PathDToPath64(*from_c(path));
+  auto p = TransformPath<int64_t, double>(*from_c(path));
   return to_c(new (mem) Path64(p));
 }
 
 ClipperPathD *clipper_path64_to_pathd(void *mem, ClipperPath64 *path) {
-  auto p = Path64ToPathD(*from_c(path));
+  auto p = TransformPath<double, int64_t>(*from_c(path));
   return to_c(new (mem) PathD(p));
 }
 
 ClipperPaths64 *clipper_pathsd_to_paths64(void *mem, ClipperPathsD *paths) {
-  auto p = PathsDToPaths64(*from_c(paths));
+  auto p = TransformPaths<int64_t, double>(*from_c(paths));
   return to_c(new (mem) Paths64(p));
 }
 
 ClipperPathsD *clipper_paths64_to_pathsd(void *mem, ClipperPaths64 *paths) {
-  auto p = Paths64ToPathsD(*from_c(paths));
+  auto p = TransformPaths<double, int64_t>(*from_c(paths));
   return to_c(new (mem) PathsD(p));
 }
 
