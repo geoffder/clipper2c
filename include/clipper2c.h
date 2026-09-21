@@ -471,10 +471,7 @@ void clipper_svgwriter_clear(ClipperSvgWriter *w);
 
 // SvgReader
 
-ClipperSvgReader *clipper_svgreader(void *mem);
-void clipper_svgreader_load_from_file(ClipperSvgReader *r,
-                                      const char *filename);
-void clipper_svgreader_clear(ClipperSvgReader *r);
+ClipperSvgReader *clipper_svgreader(void *mem, const char *filename);
 ClipperPathsD *clipper_svgreader_get_pathsd(void *mem, ClipperSvgReader *r);
 
 // memory size

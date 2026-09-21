@@ -20,19 +20,19 @@ ClipperClipper64 *clipper_clipper64(void *mem) {
 // Setters / Getters
 
 void clipper_clipper64_set_preserve_collinear(ClipperClipper64 *c, int t) {
-  from_c(c)->PreserveCollinear = t;
+  from_c(c)->PreserveCollinear(t);
 }
 
 void clipper_clipper64_set_reverse_solution(ClipperClipper64 *c, int t) {
-  from_c(c)->ReverseSolution = t;
+  from_c(c)->ReverseSolution(t);
 }
 
 int clipper_clipper64_get_preserve_collinear(ClipperClipper64 *c) {
-  return from_c(c)->PreserveCollinear;
+  return from_c(c)->PreserveCollinear();
 }
 
 int clipper_clipper64_get_reverse_solution(ClipperClipper64 *c) {
-  return from_c(c)->ReverseSolution;
+  return from_c(c)->ReverseSolution();
 }
 
 void clipper_clipper64_clear(ClipperClipper64 *c) { from_c(c)->Clear(); }

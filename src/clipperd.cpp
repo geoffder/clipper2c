@@ -20,19 +20,19 @@ ClipperClipperD *clipper_clipperd(void *mem, int precision) {
 // Setters / Getters
 
 void clipper_clipperd_set_preserve_collinear(ClipperClipperD *c, int t) {
-  from_c(c)->PreserveCollinear = t;
+  from_c(c)->PreserveCollinear(t);
 }
 
 void clipper_clipperd_set_reverse_solution(ClipperClipperD *c, int t) {
-  from_c(c)->ReverseSolution = t;
+  from_c(c)->ReverseSolution(t);
 }
 
 int clipper_clipperd_get_preserve_collinear(ClipperClipperD *c) {
-  return from_c(c)->PreserveCollinear;
+  return from_c(c)->PreserveCollinear();
 }
 
 int clipper_clipperd_get_reverse_solution(ClipperClipperD *c) {
-  return from_c(c)->ReverseSolution;
+  return from_c(c)->ReverseSolution();
 }
 
 void clipper_clipperd_clear(ClipperClipperD *c) { from_c(c)->Clear(); }
