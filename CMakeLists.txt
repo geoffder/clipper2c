@@ -46,3 +46,17 @@ target_link_libraries(
 
 target_include_directories(clipper2c PUBLIC ${PROJECT_SOURCE_DIR}/include)
 target_compile_features(clipper2c PRIVATE cxx_std_17)
+
+# Tests
+
+option(CLIPPER2C_TESTS "Build clipper2c tests" OFF)
+
+if (CLIPPER2C_TESTS)
+  enable_testing()
+  find_package(GTest REQUIRED)
+  add_executable(clipper2c_test test/clipper2c_test.cpp)
+  target_link_libraries(clipper2c_test PRIVATE clipper2c GTest::gtest_main)
+  target_compile_features(clipper2c_test PRIVATE cxx_std_17)
+  include(GoogleTest)
+  gtest_discover_tests(clipper2c_test)
+endif()
